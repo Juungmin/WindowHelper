@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="1">
 
 
     <TextView
@@ -32,19 +33,21 @@
 
 
     <TextView
-        android:background="@drawable/xml_border"
-        android:layout_gravity="center_vertical"
-        android:padding="10dp"
-        android:textAlignment="center"
-        android:text="위치 : "
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/xml_border"
+        android:padding="10dp"
+        android:text="위치 : "
+        android:textAlignment="center" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_dust"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#D3D3D3"
-        android:text="우리집 미세먼지 농도 : " />
+        android:text="우리집 미세먼지 농도 : "
+        android:layout_weight="0.13" />
 
 </LinearLayout>
