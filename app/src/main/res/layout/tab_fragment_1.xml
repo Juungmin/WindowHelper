@@ -46,8 +46,8 @@
         android:id="@+id/tv_dust"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="0.13"
         android:background="#D3D3D3"
-        android:text="우리집 미세먼지 농도 : "
-        android:layout_weight="0.13" />
+        android:text="우리집 미세먼지 농도 : " />
 
 </LinearLayout>
