@@ -28,6 +28,11 @@ public class TabFragment2 extends Fragment {
     TextView tv_gas;
     ImageView iv_smoke;
 
+    /*Scroll view property*/
+    ScrollView scroll_view;
+    LinearLayout tab_layout;
+    TextView scroll_view_text;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.tab_fragment_2, container, false);
@@ -35,6 +40,9 @@ public class TabFragment2 extends Fragment {
 
         tv_gas = (TextView) view.findViewById(R.id.tv_gas);
         iv_smoke = (ImageView) view.findViewById(R.id.iv_smoke);
+        scroll_view = (ScrollView) view.findViewById(R.id.scroll_view);
+        tab_layout = (LinearLayout) view.findViewById(R.id.tab_layout);
+        //scroll_view_text = (TextView) view.findViewById(R.id.scroll_view_text);
 
         database = FirebaseDatabase.getInstance();
 
@@ -42,12 +50,14 @@ public class TabFragment2 extends Fragment {
         myRef_gas = myRef_gas.child("gas");
         myRef_gas = myRef_gas.child("gas_val");
 
+
         //Read from the DB
         //update if there is a change on DB
         myRef_gas.addValueEventListener(new ValueEventListener(){
             double gas_val = 0;
+
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
 
@@ -62,7 +72,19 @@ public class TabFragment2 extends Fragment {
                     Log.d(TAG, "Value is: " + (int) gas_val);
 
                     if((int) gas_val >= 200) {
-                        iv_smoke.setImageResource(R.drawable.smoking);
+                        iv_smoke.setImageResource(R.drawable.smoking); // change image to smoking pic
+
+                        //for (int i =0 ; i < 1; i++) {
+                        TextView textView = new TextView(TabFragment2.this.getActivity());
+                        //}
+
+                        textView.setText("담배연기 " + value + "ppm 이 감지되었습니다.");
+                        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT
+                        );
+
+                        tab_layout.addView(textView, p);
                     }
                     else {
                         iv_smoke.setImageResource(R.drawable.no_smoking);
