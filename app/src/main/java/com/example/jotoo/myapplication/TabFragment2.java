@@ -4,6 +4,7 @@ package com.example.jotoo.myapplication;
  * Created by kwangwoon on 2017. 10. 14..
  */
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,7 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class TabFragment2 extends Fragment {
 
-    private static final String TAG = "Tab2";
 
     FirebaseDatabase database;
     DatabaseReference myRef_gas;
@@ -33,14 +33,21 @@ public class TabFragment2 extends Fragment {
     LinearLayout tab_layout;
     TextView scroll_view_text;
 
+    private static final String TAG = "CardListActivity";
+    private SmokeArrayAdapter smokeArrayAdapter;
+    private ListView listView;
+    Context context;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.tab_fragment_2, container, false);
         //TextView tv_dust;
+        context = getActivity();
 
         tv_gas = (TextView) view.findViewById(R.id.tv_gas);
         iv_smoke = (ImageView) view.findViewById(R.id.iv_smoke);
-        scroll_view = (ScrollView) view.findViewById(R.id.scroll_view);
+        //scroll_view = (ScrollView) view.findViewById(R.id.scroll_view);
         tab_layout = (LinearLayout) view.findViewById(R.id.tab_layout);
         //scroll_view_text = (TextView) view.findViewById(R.id.scroll_view_text);
 
@@ -67,6 +74,8 @@ public class TabFragment2 extends Fragment {
                 tv_gas.setText("우리 집 가스 농도: "+value + " ppm");
                 //Log.d(TAG, "Value is: " + value);
 
+
+                /*
                 try {
                     gas_val = Double.parseDouble(value);
                     Log.d(TAG, "Value is: " + (int) gas_val);
@@ -91,7 +100,7 @@ public class TabFragment2 extends Fragment {
                     }
                 } catch(NumberFormatException nfe) {
                     System.out.println("Could not parse " + nfe);
-                }
+                }*/
             }
 
             @Override
@@ -101,6 +110,19 @@ public class TabFragment2 extends Fragment {
             }
 
         });
+
+
+        listView = view.findViewById(R.id.card_listView);
+
+
+        smokeArrayAdapter = new SmokeArrayAdapter(context.getApplicationContext(), R.layout.list_item_smoke);
+
+        for (int i = 0; i < 10; i++) {
+            Smoke smoke = new Smoke("Card " + (i+1) + " Line 1", "Card " + (i+1) + " Line 2");
+            smokeArrayAdapter.add(smoke);
+        }
+        listView.setAdapter(smokeArrayAdapter);
+
         return view;
     }
 }
