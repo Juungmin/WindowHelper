@@ -23,6 +23,7 @@ public class TabFragment1 extends Fragment {
     DatabaseReference myRef_dust;
 
     TextView tv_dust;
+    TextView kitchen_per;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -30,6 +31,7 @@ public class TabFragment1 extends Fragment {
         //TextView tv_dust;
 
         tv_dust = (TextView) view.findViewById(R.id.tv_dust);
+        kitchen_per = (TextView) view.findViewById(R.id.kitchen_per);
 
         database = FirebaseDatabase.getInstance();
 
@@ -48,6 +50,7 @@ public class TabFragment1 extends Fragment {
                 String value = dataSnapshot.getValue(String.class);
                 //데이터를 화면에 출력해 준다.
                 tv_dust.setText("우리 집 미세먼지 농도: "+value + " ㎍/㎥");
+                kitchen_per.setText(value + " ㎍/㎥");
                 //Log.d(TAG, "Value is: " + value);
             }
 
