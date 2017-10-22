@@ -38,7 +38,6 @@ public class TabFragment2 extends Fragment {
     private ListView listView;
     Context context;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.tab_fragment_2, container, false);
