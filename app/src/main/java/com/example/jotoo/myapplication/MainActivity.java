@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        edt1 = (EditText) findViewById(R.id.editText);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -54,10 +53,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-    public void btnStart(View v) {
+   /* public void btnStart(View v) {
         Intent intent = new Intent(this, SubActivity.class);
         intent.putExtra("input1",edt1.getText().toString());
         startActivity(intent);
-    }
+    }*/
 }
