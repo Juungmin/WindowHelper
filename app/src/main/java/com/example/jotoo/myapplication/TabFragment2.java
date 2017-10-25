@@ -19,6 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 public class TabFragment2 extends Fragment {
 
 
@@ -41,65 +44,36 @@ public class TabFragment2 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.tab_fragment_2, container, false);
-        //TextView tv_dust;
+
         context = getActivity();
 
         tv_gas = (TextView) view.findViewById(R.id.tv_gas);
         iv_smoke = (ImageView) view.findViewById(R.id.iv_smoke);
-        //scroll_view = (ScrollView) view.findViewById(R.id.scroll_view);
         tab_layout = (LinearLayout) view.findViewById(R.id.tab_layout);
-        //scroll_view_text = (TextView) view.findViewById(R.id.scroll_view_text);
 
         database = FirebaseDatabase.getInstance();
-
-        myRef_gas = database.getReference("home test");
-        myRef_gas = myRef_gas.child("gas");
-        myRef_gas = myRef_gas.child("gas_val");
-
+        myRef_gas = database.getReference("home test").child("gas");
 
         //Read from the DB
         //update if there is a change on DB
         myRef_gas.addValueEventListener(new ValueEventListener(){
-            double gas_val = 0;
 
             @Override
             public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
 
-                //String value = dataSnapshot.getValue(String.class);
-                String value = dataSnapshot.getValue(String.class);
-                //데이터를 화면에 출력해 준다.
-                tv_gas.setText("우리 집 가스 농도: "+value + " ppm");
+                //gas record수집이 필요하면 사용.
+               // collectGasRecords((Map<String, Object>) dataSnapshot.getValue());
+
+               for(DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
+                    //gasDataList.add(String.valueOf(childSnapshot.getValue()));
+                   String value = childSnapshot.child("gas_val").getValue(String.class);
+
+                    tv_gas.setText("우리 집 가스 농도: "+value + " ppm");
+                }
                 //Log.d(TAG, "Value is: " + value);
 
-
-                /*
-                try {
-                    gas_val = Double.parseDouble(value);
-                    Log.d(TAG, "Value is: " + (int) gas_val);
-
-                    if((int) gas_val >= 200) {
-                        iv_smoke.setImageResource(R.drawable.smoking); // change image to smoking pic
-
-                        //for (int i =0 ; i < 1; i++) {
-                        TextView textView = new TextView(TabFragment2.this.getActivity());
-                        //}
-
-                        textView.setText("담배연기 " + value + "ppm 이 감지되었습니다.");
-                        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.MATCH_PARENT,
-                                LinearLayout.LayoutParams.WRAP_CONTENT
-                        );
-
-                        tab_layout.addView(textView, p);
-                    }
-                    else {
-                        iv_smoke.setImageResource(R.drawable.no_smoking);
-                    }
-                } catch(NumberFormatException nfe) {
-                    System.out.println("Could not parse " + nfe);
-                }*/
             }
 
             @Override
@@ -123,5 +97,22 @@ public class TabFragment2 extends Fragment {
         listView.setAdapter(smokeArrayAdapter);
 
         return view;
+    }
+
+    private void collectGasRecords(Map<String, Object> gas) {
+        ArrayList<String> gasDataList = new ArrayList<>();
+        int totalSize = 0;
+
+        for(Map.Entry<String, Object> entry : gas.entrySet()) {
+            Map singleGasRecord = (Map) entry.getValue();
+            gasDataList.add((String) singleGasRecord.get("gas_val"));
+        }
+
+        totalSize = gasDataList.size();
+
+        for(int i = 0; i < totalSize; i++) {
+            tv_gas.setText("우리 집 가스 농도: "+gasDataList.get(i) + " ppm");
+        }
+
     }
 }

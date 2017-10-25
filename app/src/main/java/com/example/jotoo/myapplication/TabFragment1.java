@@ -168,7 +168,7 @@ public class TabFragment1 extends Fragment {
 
         myRef_dust = database.getReference("home test");
         myRef_dust = myRef_dust.child("dust");
-        myRef_dust = myRef_dust.child("dust_val");
+
         //Read from the DB
         //update if there is a change on DB
         myRef_dust.addValueEventListener(new ValueEventListener(){
@@ -177,11 +177,13 @@ public class TabFragment1 extends Fragment {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
 
-                //String value = dataSnapshot.getValue(String.class);
-                String value = dataSnapshot.getValue(String.class);
-                //데이터를 화면에 출력해 준다.
-                tv_dust.setText("우리 집 미세먼지 농도: "+value + " ㎍/㎥");
-                kitchen_per.setText(value + " ㎍/㎥");
+                for(DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
+                    //gasDataList.add(String.valueOf(childSnapshot.getValue()));
+                    String value = childSnapshot.child("dust_val").getValue(String.class);
+                    //데이터를 화면에 출력해 준다.
+                    tv_dust.setText("우리 집 미세먼지 농도: " + value + " ㎍/㎥");
+                    kitchen_per.setText(value + " ㎍/㎥");
+                }
                 //Log.d(TAG, "Value is: " + value);
             }
 
