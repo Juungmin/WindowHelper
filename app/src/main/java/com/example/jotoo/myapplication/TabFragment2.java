@@ -99,7 +99,7 @@ public class TabFragment2 extends Fragment {
         return view;
     }
 
-    private void collectGasRecords(Map<String, Object> gas) {
+/*    private void collectGasRecords(Map<String, Object> gas) {
         ArrayList<String> gasDataList = new ArrayList<>();
         int totalSize = 0;
 
@@ -114,5 +114,5 @@ public class TabFragment2 extends Fragment {
             tv_gas.setText("우리 집 가스 농도: "+gasDataList.get(i) + " ppm");
         }
 
-    }
+    }*/
 }
