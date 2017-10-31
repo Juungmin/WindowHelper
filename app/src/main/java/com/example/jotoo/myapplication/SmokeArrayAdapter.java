@@ -22,7 +22,6 @@ private List<Smoke> smokeList = new ArrayList<Smoke>();
 
 static class SmokeViewHolder {
     TextView line1;
-    TextView line2;
 }
 
     public SmokeArrayAdapter(Context context, int textViewResourceId) {
@@ -54,14 +53,12 @@ static class SmokeViewHolder {
             row = inflater.inflate(R.layout.list_item_smoke, parent, false);
             viewHolder = new SmokeViewHolder();
             viewHolder.line1 = (TextView) row.findViewById(R.id.line1);
-            viewHolder.line2 = (TextView) row.findViewById(R.id.line2);
             row.setTag(viewHolder);
         } else {
             viewHolder = (SmokeViewHolder)row.getTag();
         }
         Smoke smoke = getItem(position);
         viewHolder.line1.setText(smoke.getLine1());
-        viewHolder.line2.setText(smoke.getLine2());
         return row;
     }
 

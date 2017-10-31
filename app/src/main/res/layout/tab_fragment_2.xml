@@ -7,8 +7,10 @@
 
     <TextView
         android:id="@+id/tv_gas"
-        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="우리집 미세먼지 농도 :  "
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_alignParentBottom="true"
@@ -17,10 +19,9 @@
 
     <ImageView
         android:id="@+id/iv_smoke"
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         app:srcCompat="@drawable/no_smoking" />
 
     <TextView
