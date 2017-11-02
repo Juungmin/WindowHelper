@@ -19,6 +19,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class TabFragment2 extends Fragment {
 
     FirebaseDatabase database;
@@ -32,6 +36,14 @@ public class TabFragment2 extends Fragment {
     Context context;
     View view;
 
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
+    SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd", Locale.KOREA);
+
+    String today = sdf.format(new Date());
+
+    String today_2 = sdf2.format(new Date());
+
+    String zone_location = "zone_"+today;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.tab_fragment_2, container, false);
@@ -40,7 +52,7 @@ public class TabFragment2 extends Fragment {
         iv_smoke = (ImageView) view.findViewById(R.id.iv_smoke);
         tab_layout = (LinearLayout) view.findViewById(R.id.tab_layout);
         database = FirebaseDatabase.getInstance();
-        myRef_gas = database.getReference("home test").child("gas");
+        myRef_gas = database.getReference("home test");
 
         //Read from the DB
         //update if there is a change on DB
@@ -53,7 +65,7 @@ public class TabFragment2 extends Fragment {
 
                 //집 가스 출력
                 for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                    String value = childSnapshot.child("gas_val").getValue(String.class);
+                    String value = childSnapshot.child("gas").child("gas_val").getValue(String.class);
                     tv_gas.setText("우리 집 가스 농도: " + value + " ppm");
                 }
 
@@ -63,11 +75,18 @@ public class TabFragment2 extends Fragment {
                 smokeArrayAdapter = new SmokeArrayAdapter(context.getApplicationContext(), R.layout.list_item_smoke);
 
                 for (DataSnapshot zoneSnapshot : dataSnapshot.getChildren()) {
-                    String date = zoneSnapshot.child("date").getValue(String.class);
-                    String time = zoneSnapshot.child("time").getValue(String.class);
-                    String gas_val = zoneSnapshot.child("gas_val").getValue(String.class);
-                    Smoke smoke = new Smoke("[ " + date + " ]\n" + time + " 에 측정된 값은 '" + gas_val + "' 입니다");
-                    smokeArrayAdapter.add(smoke);
+                    String date = zoneSnapshot.child("gas").child("date").getValue(String.class);
+                    String time = zoneSnapshot.child("gas").child("time").getValue(String.class);
+                    String gas_val = zoneSnapshot.child("gas").child("gas_val").getValue(String.class);
+
+                    if(today_2 != date) {
+                        Smoke smoke = new Smoke("[ " + date + " ]\n" + time + " 에 측정된 값은 '" + gas_val + "' 입니다");
+                        smokeArrayAdapter.add(smoke);
+                    }
+                    else {
+                        Smoke smoke = new Smoke("[ " + date + " ]\n" + time + " 에 측정된 값은 '" + gas_val + "' 입니다");
+                    }
+
                 }
 
                 listView.setAdapter(smokeArrayAdapter);

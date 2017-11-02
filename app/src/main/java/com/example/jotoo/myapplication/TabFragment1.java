@@ -184,18 +184,6 @@ public class TabFragment1 extends Fragment {
                 tv_dust.setText("우리 집 미세먼지 농도: " + value + " ㎍/㎥");
                 kitchen_per.setText(value + " ㎍/㎥");
 
-                for(DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
-                    //gasDataList.add(String.valueOf(childSnapshot.getValue()));
-        //            String value = childSnapshot.child("dust_val").getValue(String.class);
-                    //데이터를 화면에 출력해 준다.
-        //            tv_dust.setText("우리 집 미세먼지 농도: " + value + " ㎍/㎥");
-        //           kitchen_per.setText(value + " ㎍/㎥");
-                }
-
-               /* if(dataSnapshot != null) {
-                    final String fid = dataSnapshot.child("dust_val").getValue().toString();
-                    tv_dust.setText("우리 집 미세먼지 농도: " + fid + " ㎍/㎥");
-                }*/
                 //Log.d(TAG, "Value is: " + value);
             }
 
