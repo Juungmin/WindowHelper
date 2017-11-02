@@ -130,6 +130,8 @@ public class TabFragment1 extends Fragment {
         SimpleDateFormat sdf2 = new SimpleDateFormat("HH", Locale.KOREA);
         String currentHour = sdf2.format(new Date());
 
+        String today = sdf.format(new Date());
+
         Log.d(currentHour, "원래 시간");
         if((Integer.parseInt(currentHour) < 18 && Integer.parseInt(currentHour) >= 6)){
             currentHour = "0600";
@@ -149,8 +151,8 @@ public class TabFragment1 extends Fragment {
         loc = "11B00000";
         serviceKey = "T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D";
         url = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleLandWeather?ServiceKey=T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D"
-                + "&regId=" + loc + "&tmFc=201710310600";
-        url2 = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib" + "?ServiceKey=" + serviceKey + "&base_date=20171031" + "&base_time=0600" + "&nx=60&ny=127";
+                + "&regId=" + loc + "&tmFc=201711020600";
+        url2 = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib" + "?ServiceKey=" + serviceKey + "&base_date=20171102" + "&base_time=0600" + "&nx=60&ny=127";
         GetXMLTask task = new GetXMLTask();
         task.execute(url);
 
@@ -164,10 +166,10 @@ public class TabFragment1 extends Fragment {
         tv_dust = (TextView) rootView.findViewById(R.id.tv_dust);
         kitchen_per = (TextView) rootView.findViewById(R.id.kitchen_per);
 
+        String zone_location = "zone_"+today;
         database = FirebaseDatabase.getInstance();
-
-        myRef_dust = database.getReference("home test");
-        myRef_dust = myRef_dust.child("dust");
+//        myRef_dust = database.getReference("home test").child("dust");
+        myRef_dust = database.getReference("home test").child(zone_location).child("dust");
 
         //Read from the DB
         //update if there is a change on DB
@@ -177,12 +179,17 @@ public class TabFragment1 extends Fragment {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
 
+                String value = dataSnapshot.child("dust_val").getValue(String.class);
+
+                tv_dust.setText("우리 집 미세먼지 농도: " + value + " ㎍/㎥");
+                kitchen_per.setText(value + " ㎍/㎥");
+
                 for(DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
                     //gasDataList.add(String.valueOf(childSnapshot.getValue()));
-                    String value = childSnapshot.child("dust_val").getValue(String.class);
+        //            String value = childSnapshot.child("dust_val").getValue(String.class);
                     //데이터를 화면에 출력해 준다.
-                    tv_dust.setText("우리 집 미세먼지 농도: " + value + " ㎍/㎥");
-                    kitchen_per.setText(value + " ㎍/㎥");
+        //            tv_dust.setText("우리 집 미세먼지 농도: " + value + " ㎍/㎥");
+        //           kitchen_per.setText(value + " ㎍/㎥");
                 }
 
                /* if(dataSnapshot != null) {
