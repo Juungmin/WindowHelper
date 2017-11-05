@@ -67,6 +67,14 @@ public class TabFragment2 extends Fragment {
                 for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
                     String value = childSnapshot.child("gas").child("gas_val").getValue(String.class);
                     tv_gas.setText("우리 집 가스 농도: " + value + " ppm");
+
+                    // 담배사진 변경
+                    if(value!=null) {
+                        if (Integer.parseInt(value) > 300)
+                            iv_smoke.setImageResource(R.drawable.smoking);
+                        else
+                            iv_smoke.setImageResource(R.drawable.no_smoking);
+                    }
                 }
 
 

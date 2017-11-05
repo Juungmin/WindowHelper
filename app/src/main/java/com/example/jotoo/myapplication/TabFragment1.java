@@ -3,6 +3,7 @@ package com.example.jotoo.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
@@ -70,6 +71,7 @@ public class TabFragment1 extends Fragment {
 
     TextView tv_dust;
     TextView kitchen_per;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -151,8 +153,8 @@ public class TabFragment1 extends Fragment {
         loc = "11B00000";
         serviceKey = "T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D";
         url = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleLandWeather?ServiceKey=T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D"
-                + "&regId=" + loc + "&tmFc=201711020600";
-        url2 = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib" + "?ServiceKey=" + serviceKey + "&base_date=20171102" + "&base_time=0600" + "&nx=60&ny=127";
+                + "&regId=" + loc + "&tmFc=201711050600";
+        url2 = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib" + "?ServiceKey=" + serviceKey + "&base_date=20171105" + "&base_time=0600" + "&nx=60&ny=127";
         GetXMLTask task = new GetXMLTask();
         task.execute(url);
 
