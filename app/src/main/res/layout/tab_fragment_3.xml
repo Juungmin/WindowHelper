@@ -1,17 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_dust"
-        android:layout_width="match_parent"
+        android:id="@+id/Title"
+        android:textSize="23dp"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.13"
-        android:background="#D3D3D3"
-        android:text="미세먼지 푸시 설정" />
+        android:layout_gravity="center"
+        android:textColor="#000000"
+        android:text="알람 설정"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:layout_width="80dp"
+        android:layout_height="2dp" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/tv_SubTitle"
+        android:textSize="18dp"
+        android:text="미세먼지 알람과 담배 알람을 설정하면\n 센서값을 알 수 있어요"
+        android:gravity="center"
+        android:background="@drawable/background_selector"
+        android:layout_gravity="center"
+        android:layout_width="350dp"
+        android:layout_height="70dp" />
+
+
+    <TextView
+        android:id="@+id/dust_Title"
+        android:textSize="23dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:text="미세먼지푸쉬"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/dust_SubTitle"
+        android:textSize="18dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#9E9E9E"
+        android:layout_marginTop="3dp"
+        android:text="아침 저녁으로 미세먼지를 알려줄게요!" />
+
+    <TextView
+        android:background="#BDBDBD"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_height="1dp" />
 
     <Switch
         android:id="@+id/toggle1"
@@ -19,9 +71,10 @@
         android:layout_height="wrap_content"
         android:text="아침"
         android:textSize="20dp"
+        android:layout_marginLeft="20dp"
         android:checked="true"
         android:layout_below="@+id/tv_dust"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="15dp"
         />
 
     <Switch
@@ -30,23 +83,44 @@
         android:layout_height="wrap_content"
         android:text="저녁"
         android:textSize="20dp"
+        android:layout_marginLeft="20dp"
         android:checked="true"
         android:layout_below="@+id/toggle1"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         />
 
     <TextView
-        android:id="@+id/tv_ciga"
+        android:id="@+id/smoke_Title"
+        android:textSize="23dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:text="담배연기푸쉬"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/smoke_SubTitle"
+        android:textSize="18dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#9E9E9E"
+        android:layout_marginTop="3dp"
+        android:text="담배연기를 알려줄게요!" />
+
+    <TextView
+        android:background="#BDBDBD"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="#D3D3D3"
-        android:text="담배 푸시 설정"
-        android:textSize="16dp"
-        android:layout_below="@+id/toggle2"
-        android:layout_marginTop="15dp"
-        />
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_height="1dp" />
 
     <Switch
+        android:layout_marginLeft="20dp"
         android:id="@+id/toggle3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,7 +128,7 @@
         android:textSize="20dp"
         android:checked="true"
         android:layout_below="@+id/tv_ciga"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         />
 
-</RelativeLayout>
+</LinearLayout>

@@ -3,6 +3,7 @@ package com.example.jotoo.myapplication;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +18,12 @@ import java.util.List;
  */
 
 public class SmokeArrayAdapter  extends ArrayAdapter<Smoke> {
-private static final String TAG = "SmokeArrayAdapter";
-private List<Smoke> smokeList = new ArrayList<Smoke>();
+    private static final String TAG = "SmokeArrayAdapter";
+    private List<Smoke> smokeList = new ArrayList<Smoke>();
 
-static class SmokeViewHolder {
-    TextView line1;
+    static class SmokeViewHolder {
+        TextView line1;
+
 }
 
     public SmokeArrayAdapter(Context context, int textViewResourceId) {
@@ -59,7 +61,11 @@ static class SmokeViewHolder {
         }
         Smoke smoke = getItem(position);
         viewHolder.line1.setText(smoke.getLine1());
+
+        Typeface typeface1 = Typeface.createFromAsset(getContext().getAssets(),"BMJUA_ttf.ttf");
+        viewHolder.line1.setTypeface(typeface1);
         return row;
+
     }
 
     public Bitmap decodeToBitmap(byte[] decodedByte) {

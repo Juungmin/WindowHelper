@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +28,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,18 +42,39 @@ public class TabFragment3 extends Fragment {
     DatabaseReference myRef_gas;
     Context context;
     View view;
-
+    TextView title;
+    TextView subtitle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.tab_fragment_3, container, false);
+        context=getActivity();
 
         final boolean[] switch_check = new boolean[3];
         switch_check[0] = true;
         switch_check[1] = true;
         switch_check[2] = true;
 
-        view = inflater.inflate(R.layout.tab_fragment_3, container, false);
-        context = getActivity();
+        title =  (TextView) view.findViewById(R.id.Title);
+        Typeface typeface2 = Typeface.createFromAsset(context.getAssets(),"BMDOHYEON_ttf.ttf");
+        title.setTypeface(typeface2);
+
+        subtitle =  (TextView) view.findViewById(R.id.tv_SubTitle);
+        Typeface typeface1 = Typeface.createFromAsset(context.getAssets(),"BMJUA_ttf.ttf");
+        subtitle.setTypeface(typeface1);
+
+        TextView dustTitle = (TextView) view.findViewById(R.id.dust_Title);
+        dustTitle.setTypeface(typeface2);
+        TextView dustSubTitle = (TextView) view.findViewById(R.id.dust_SubTitle);
+        dustSubTitle.setTypeface(typeface1);
+
+        TextView smokeTitle = (TextView) view.findViewById(R.id.smoke_Title);
+        smokeTitle.setTypeface(typeface2);
+        TextView smokeSubTitle = (TextView) view.findViewById(R.id.smoke_SubTitle);
+        smokeSubTitle.setTypeface(typeface1);
+
+
+
         database = FirebaseDatabase.getInstance();
 
         Switch sw = (Switch)view.findViewById(R.id.toggle1);
@@ -91,8 +116,10 @@ public class TabFragment3 extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String value_dust = dataSnapshot.child("dust_val").getValue(String.class);
 
-                if(Integer.parseInt(value_dust) >= 150 && switch_check[0] == true){
-                    Notification_dust();
+                if(value_dust!=null) {
+                    if (Integer.parseInt(value_dust) >= 150 && switch_check[0] == true) {
+                        Notification_dust();
+                    }
                 }
             }
 
@@ -107,9 +134,11 @@ public class TabFragment3 extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String value_gas = dataSnapshot.child("gas_val").getValue(String.class);
 
-                if(Integer.parseInt(value_gas) >= 150 && switch_check[2] == true){
-                    Notification_gas();
-                    //Log.d(Boolean.toString(switch_check[1]),"aaaa");
+                if(value_gas!=null) {
+                    if (Integer.parseInt(value_gas) >= 150 && switch_check[2] == true) {
+                        Notification_gas();
+                        //Log.d(Boolean.toString(switch_check[1]),"aaaa");
+                    }
                 }
             }
 
