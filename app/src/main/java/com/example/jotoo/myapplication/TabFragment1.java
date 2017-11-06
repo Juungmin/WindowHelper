@@ -161,8 +161,8 @@ public class TabFragment1 extends Fragment {
         loc = "11B00000";
         serviceKey = "T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D";
         url = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleLandWeather?ServiceKey=T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D"
-                + "&regId=" + loc + "&tmFc=201711060600";
-        url2 = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib" + "?ServiceKey=" + serviceKey + "&base_date=20171106" + "&base_time=0600" + "&nx=60&ny=127";
+                + "&regId=" + loc + "&tmFc=201711061800";
+        url2 = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib" + "?ServiceKey=" + serviceKey + "&base_date=20171106" + "&base_time=1800" + "&nx=60&ny=127";
         GetXMLTask task = new GetXMLTask();
         task.execute(url);
 
@@ -300,6 +300,11 @@ public class TabFragment1 extends Fragment {
                 img2 = (ImageView)rootView.findViewById(R.id.img2);
                 img2.setImageResource(R.mipmap.w1);
             }
+            else if(wf3Pm.equals("구름많고 비")){
+                //setContentView(R.layout.activity_main);
+                img2 = (ImageView)rootView.findViewById(R.id.img2);
+                img2.setImageResource(R.mipmap.ic_launcher);
+            }
             if(wf4Pm.equals("구름많음")){
                 //setContentView(R.layout.activity_main);
                 img3 = (ImageView)rootView.findViewById(R.id.img3);
@@ -320,6 +325,11 @@ public class TabFragment1 extends Fragment {
                 //setContentView(R.layout.activity_main);
                 img3 = (ImageView)rootView.findViewById(R.id.img3);
                 img3.setImageResource(R.mipmap.w1);
+            }
+            else if(wf4Pm.equals("구름많고 비")){
+                //setContentView(R.layout.activity_main);
+                img3 = (ImageView)rootView.findViewById(R.id.img3);
+                img3.setImageResource(R.mipmap.ic_launcher);
             }
 
             super.onPostExecute(doc);
@@ -404,6 +414,11 @@ public class TabFragment1 extends Fragment {
                 //setContentView(R.layout.activity_main);
                 img1 = (ImageView)rootView.findViewById(R.id.img1);
                 img1.setImageResource(R.mipmap.w1);
+            }
+            else if(today.getText().toString() == "구름많고 비"){
+                //setContentView(R.layout.activity_main);
+                img1 = (ImageView)rootView.findViewById(R.id.img1);
+                img1.setImageResource(R.mipmap.ic_launcher);
             }
 
             super.onPostExecute(doc);
