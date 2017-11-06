@@ -88,10 +88,12 @@ public class TabFragment1 extends Fragment {
         context = getActivity();
 
         TextView tv_main = (TextView)rootView.findViewById(R.id.main);
+        TextView kit_Title = (TextView)rootView.findViewById(R.id.kitchen_Title);
 
 
         Typeface typeface1 = Typeface.createFromAsset(context.getAssets(),"BMJUA_ttf.ttf");
         tv_main.setTypeface(typeface1);
+        kit_Title.setTypeface(typeface1);
 
         gps_text = (TextView)rootView.findViewById(R.id.gps_text);
 
