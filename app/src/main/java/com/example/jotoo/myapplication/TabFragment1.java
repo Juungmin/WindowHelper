@@ -87,6 +87,12 @@ public class TabFragment1 extends Fragment {
         String serviceKey;
         context = getActivity();
 
+        TextView tv_main = (TextView)rootView.findViewById(R.id.main);
+
+
+        Typeface typeface1 = Typeface.createFromAsset(context.getAssets(),"BMJUA_ttf.ttf");
+        tv_main.setTypeface(typeface1);
+
         gps_text = (TextView)rootView.findViewById(R.id.gps_text);
 
         mHandler = new Handler(){
@@ -153,8 +159,8 @@ public class TabFragment1 extends Fragment {
         loc = "11B00000";
         serviceKey = "T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D";
         url = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleLandWeather?ServiceKey=T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D"
-                + "&regId=" + loc + "&tmFc=201711050600";
-        url2 = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib" + "?ServiceKey=" + serviceKey + "&base_date=20171105" + "&base_time=0600" + "&nx=60&ny=127";
+                + "&regId=" + loc + "&tmFc=201711060600";
+        url2 = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib" + "?ServiceKey=" + serviceKey + "&base_date=20171106" + "&base_time=0600" + "&nx=60&ny=127";
         GetXMLTask task = new GetXMLTask();
         task.execute(url);
 

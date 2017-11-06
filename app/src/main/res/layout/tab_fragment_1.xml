@@ -39,11 +39,20 @@
             android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="날씨 정보"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:layout_marginTop="30dp"
             android:paddingLeft="140dp"
             />
+
+        <TextView
+            android:background="@android:color/darker_gray"
+            android:layout_below="@+id/main"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="2dp" />
 
         <TextView
             android:id="@+id/today_text"

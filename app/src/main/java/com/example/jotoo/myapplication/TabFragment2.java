@@ -5,6 +5,7 @@ package com.example.jotoo.myapplication;
  */
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,11 +51,20 @@ public class TabFragment2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.tab_fragment_2, container, false);
         context = getActivity();
-        tv_gas = (TextView) view.findViewById(R.id.tv_gas);
+        tv_gas = (TextView) view.findViewById(R.id.smoke_value);
         iv_smoke = (ImageView) view.findViewById(R.id.iv_smoke);
+        TextView tvTitle = (TextView) view.findViewById(R.id.tv_gas);
+        TextView tvFeed = (TextView) view.findViewById(R.id.feed_Title);
         tab_layout = (LinearLayout) view.findViewById(R.id.tab_layout);
         database = FirebaseDatabase.getInstance();
         myRef_gas = database.getReference("home test");
+
+        Typeface typeface1 = Typeface.createFromAsset(context.getAssets(),"BMJUA_ttf.ttf");
+        tv_gas.setTypeface(typeface1);
+
+        Typeface typeface2 = Typeface.createFromAsset(context.getAssets(),"BMDOHYEON_ttf.ttf");
+        tvTitle.setTypeface(typeface2);
+        tvFeed.setTypeface(typeface2);
 
         //Read from the DB
         //update if there is a change on DB
@@ -66,7 +78,7 @@ public class TabFragment2 extends Fragment {
                 //집 가스 출력
                 for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
                     String value = childSnapshot.child("gas").child("gas_val").getValue(String.class);
-                    tv_gas.setText("우리 집 가스 농도: " + value + " ppm");
+                    tv_gas.setText(value + " ppm");
 
                     // 담배사진 변경
                     if(value!=null) {

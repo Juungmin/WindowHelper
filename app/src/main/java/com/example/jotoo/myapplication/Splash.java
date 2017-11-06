@@ -2,8 +2,10 @@ package com.example.jotoo.myapplication;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.TextView;
 
 /**
  * Created by kwangwoon on 2017. 11. 5..
@@ -18,6 +20,10 @@ public class Splash extends Activity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.splashscreen);
+
+        TextView title = (TextView)findViewById(R.id.title) ;
+        Typeface typeface = Typeface.createFromAsset(getAssets(),"SEASRN.ttf");
+        title.setTypeface(typeface);
 
         /* SPLASH_DISPLAY_LENGTH 뒤에 메뉴 액티비티를 실행시키고 종료한다.*/
         new Handler().postDelayed(new Runnable(){
