@@ -53,6 +53,7 @@ public class TabFragment1 extends Fragment {
 
     FirebaseDatabase database;
     DatabaseReference myRef_dust;
+    DatabaseReference myRef_dust_kitchen;
     Context context;
 
     TextView today;
@@ -69,7 +70,7 @@ public class TabFragment1 extends Fragment {
     public static int RENEW_GPS = 1;
     public static int SEND_PRINT = 2;
 
-    TextView tv_dust;
+    TextView outside_per;
     TextView kitchen_per;
 
 
@@ -169,18 +170,15 @@ public class TabFragment1 extends Fragment {
         GetXMLTask2 task2 = new GetXMLTask2();
         task2.execute(url2);
 
-        //TextView tv_dust;
 
-        tv_dust = (TextView) rootView.findViewById(R.id.tv_dust);
-
-        tv_dust = (TextView) rootView.findViewById(R.id.tv_dust);
         kitchen_per = (TextView) rootView.findViewById(R.id.kitchen_per);
+        outside_per = (TextView) rootView.findViewById(R.id.outside_per);
 
         String zone_location = "zone_"+today;
         database = FirebaseDatabase.getInstance();
 //        myRef_dust = database.getReference("home test").child("dust");
-        myRef_dust = database.getReference("home test").child(zone_location).child("dust");
 
+        myRef_dust = database.getReference("home test").child("zone_20171107");
         //Read from the DB
         //update if there is a change on DB
         myRef_dust.addValueEventListener(new ValueEventListener(){
@@ -188,11 +186,12 @@ public class TabFragment1 extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
+                String value_outside = dataSnapshot.child("dust_outside").child("dust_out_val").getValue(String.class);
+                outside_per.setText(value_outside + " ㎍/㎥");
 
-                String value = dataSnapshot.child("dust_val").getValue(String.class);
+                String value_inside = dataSnapshot.child("dust_inside").child("dust_val").getValue(String.class);
+                kitchen_per.setText(value_inside + " ㎍/㎥");
 
-                tv_dust.setText("우리 집 미세먼지 농도: " + value + " ㎍/㎥");
-                kitchen_per.setText(value + " ㎍/㎥");
 
                 //Log.d(TAG, "Value is: " + value);
             }
@@ -204,6 +203,7 @@ public class TabFragment1 extends Fragment {
             }
 
         });
+
         return rootView;
     }
 
