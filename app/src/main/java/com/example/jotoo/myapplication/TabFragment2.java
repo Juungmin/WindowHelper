@@ -103,6 +103,7 @@ public class TabFragment2 extends Fragment {
                     ssb.setSpan(new ForegroundColorSpan(Color.parseColor("#DC143C")),0,2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
                 tv_gas.setText(ssb);
+
                 /*tv_gas.setTextColor(Color.GREEN);
 
                 tv_gas.append(" 입니다.");*/
