@@ -40,33 +40,51 @@ public class TabFragment3 extends Fragment {
     View view;
 
     FirebaseDatabase database;
-    DatabaseReference myRef_dust;
-    DatabaseReference myRef_gas;
-    TextView title;
-    TextView subtitle;
+    DatabaseReference myWindow;
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
     SimpleDateFormat sdf2 = new SimpleDateFormat("HH", Locale.KOREA);
 
     String today = sdf.format(new Date());
-    String currentHour = sdf2.format(new Date());
 
     String zone_location = "zone_"+today;
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.tab_fragment_3, container, false);
         context = getActivity();
 
+        myWindow = database.getReference("home test").child("zone_20171108");
+
         TextView title = (TextView) view.findViewById(R.id.Title);
         Typeface typeface2 = Typeface.createFromAsset(context.getAssets(), "BMDOHYEON_ttf.ttf");
         title.setTypeface(typeface2);
 
-        TextView subtitle = (TextView) view.findViewById(R.id.tv_SubTitle);
+        final TextView subtitle = (TextView) view.findViewById(R.id.tv_SubTitle);
         Typeface typeface1 = Typeface.createFromAsset(context.getAssets(), "BMJUA_ttf.ttf");
         subtitle.setTypeface(typeface1);
+
+        myWindow.addValueEventListener(new ValueEventListener(){
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String reed = dataSnapshot.child("reed").child("val").getValue(String.class);
+
+                if(Integer.parseInt(reed) == 1){
+
+                }
+                else{
+                    subtitle.setText("창문이 닫혀있습니다.");
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                //Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
 
         return view;
     }
