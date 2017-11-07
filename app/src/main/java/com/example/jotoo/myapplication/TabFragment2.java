@@ -102,16 +102,16 @@ public class TabFragment2 extends Fragment {
 
                 tv_gas.setText(value2);
                 SpannableStringBuilder ssb = new SpannableStringBuilder(value2);
-                if(value3 == "보통"){
-                    ssb.setSpan(new ForegroundColorSpan(Color.parseColor("#32CD32")),0,2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                if(!value3.equals("보통")){
+                    ssb.setSpan(new ForegroundColorSpan(Color.parseColor("#DC143C")),0,2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
                 else{
-                    ssb.setSpan(new ForegroundColorSpan(Color.parseColor("#DC143C")),0,2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    ssb.setSpan(new ForegroundColorSpan(Color.parseColor("#32CD32")),0,2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
                 tv_gas.setText(ssb);
 
                 for(int i=0;i<3;i++){
-                    if(value3.equals("보통")) {
+                    if(!value3.equals("보통")) {
                         new Timer().schedule(new TimerTask() {
                             public void run() {
                                 iv_smoke.setImageResource(R.drawable.smoking);
@@ -179,10 +179,10 @@ public class TabFragment2 extends Fragment {
     public String getStatusString(double mq2_init, double mq7_init, double mq2_ratio, double mq7_ratio) {
         String status = "";
 
-        if((mq2_init - mq2_ratio) >= 3 || (mq7_init - mq7_ratio) >= 6) {
+        if((mq2_init - mq2_ratio) >= 2.5 || (mq7_init - mq7_ratio) >= 5.2) {
             status = "매우 높음";
         }
-        else if((mq2_init - mq2_ratio) >= 2 || (mq7_init - mq7_ratio) >= 4) {
+        else if((mq2_init - mq2_ratio) >= 1.7 || (mq7_init - mq7_ratio) >= 3.3) {
             status = "높음";
         }
         else if(mq2_init - mq2_ratio >= 0.7 || (mq7_init - mq7_ratio) >= 1.2) {
@@ -216,7 +216,7 @@ public class TabFragment2 extends Fragment {
             status = Double.toString(sensor_val) + " 입니다. 담배연기가 1m 이내에서 탐지 되었습니다.";
         } else {
             iv_smoke.setImageResource(R.drawable.no_smoking);
-            status = Double.toString(sensor_val) + " 입니다. 평소와 다를바 없습니다.";
+            status = Double.toString(sensor_val) + " 입니다. 평소와 같습니다.";
         }
 
         return status;
