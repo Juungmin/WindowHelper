@@ -43,6 +43,12 @@ public class TabFragment4 extends Fragment {
     TextView title;
     TextView subtitle;
 
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
+    SimpleDateFormat sdf2 = new SimpleDateFormat("HH", Locale.KOREA);
+
+    String today = sdf.format(new Date());
+    String currentHour = sdf2.format(new Date());
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.tab_fragment_4, container, false);
@@ -104,19 +110,54 @@ public class TabFragment4 extends Fragment {
         String today = sdf.format(new Date());
         String zone_location = "zone_"+today;
 
+
 //        myRef_dust = database.getReference("home test").child("dust");
-        myRef_dust = database.getReference("home test").child(zone_location).child("dust");
-        myRef_gas = database.getReference("home test").child(zone_location).child("gas");
+        myRef_gas = database.getReference("home test").child("zone_20171107");
+        myRef_dust = database.getReference("home test").child("zone_20171107");
         //Read from the DB
         //update if there is a change on DB
         myRef_dust.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String value_dust = dataSnapshot.child("dust_val").getValue(String.class);
+                String value_outside = dataSnapshot.child("dust_outside").child("dust_out_val").getValue(String.class);
+                String value_inside = dataSnapshot.child("dust_inside").child("dust_val").getValue(String.class);
 
-                if(value_dust!=null) {
-                    if (Integer.parseInt(value_dust) >= 150 && switch_check[0] == true) {
-                        Notification_dust();
+                if(value_outside!=null) {
+                    if (Double.parseDouble(value_outside) >= 150 && switch_check[1] == true) {
+                        if(Integer.parseInt(currentHour) >= 5 && Integer.parseInt(currentHour) <= 12)
+                            Notification_dust();
+                    }
+                }
+                if(value_inside!=null) {
+                    if (Double.parseDouble(value_inside) >= 150 && switch_check[1] == true) {
+                        if(Integer.parseInt(currentHour) >= 5 && Integer.parseInt(currentHour) <= 12)
+                            Notification_dust();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                //Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+        myRef_dust.addValueEventListener(new ValueEventListener(){
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String value_outside = dataSnapshot.child("dust_outside").child("dust_out_val").getValue(String.class);
+                String value_inside = dataSnapshot.child("dust_inside").child("dust_val").getValue(String.class);
+
+                if(value_outside!=null) {
+                    if (Double.parseDouble(value_outside) >= 150 && switch_check[1] == true) {
+                        if(Integer.parseInt(currentHour) >= 16 && Integer.parseInt(currentHour) <= 21)
+                            Notification_dust();
+                    }
+                }
+                if(value_inside!=null) {
+                    if (Double.parseDouble(value_inside) >= 150 && switch_check[1] == true) {
+                        if(Integer.parseInt(currentHour) >= 16 && Integer.parseInt(currentHour) <= 21)
+                            Notification_dust();
                     }
                 }
             }
@@ -130,12 +171,16 @@ public class TabFragment4 extends Fragment {
         myRef_gas.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String value_gas = dataSnapshot.child("gas_val").getValue(String.class);
+                String value_mq2 = dataSnapshot.child("gas").child("sensor_val_mq2").getValue(String.class);
+                String value_mq7 = dataSnapshot.child("gas").child("sensor_val_mq7").getValue(String.class);
 
-                if(value_gas!=null) {
-                    if (Integer.parseInt(value_gas) >= 150 && switch_check[2] == true) {
-                        Notification_gas();
-                        //Log.d(Boolean.toString(switch_check[1]),"aaaa");
+                double value_avg = (Double.parseDouble(value_mq2)+ Double.parseDouble(value_mq7))/2.0;
+                String value = Double.toString(value_avg);
+
+                if(value!=null) {
+                    if (Double.parseDouble(value) >= 300 && switch_check[0] == true) {
+                        if(Integer.parseInt(currentHour) >= 5 && Integer.parseInt(currentHour) <= 12)
+                            Notification_dust();
                     }
                 }
             }

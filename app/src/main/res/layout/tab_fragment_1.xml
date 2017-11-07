@@ -23,6 +23,7 @@
             android:layout_height="wrap_content" />
 
         <Button
+            android:id="@+id/gps_button"
             android:background="@drawable/gps"
             android:layout_marginRight="40dp"
             android:layout_marginTop="15dp"
@@ -54,98 +55,110 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/today_text"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/img1"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="left"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="오늘" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:paddingTop="20dp"
+                android:text=""
+                android:textSize="25dp" />
+
+            <TextView
+                android:id="@+id/today"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:text=""
+                android:textSize="25dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_selector"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tom"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
             android:layout_weight="1"
+            android:background="@drawable/background_selector"
             android:gravity="center"
-            android:text="내일"
-
-            />
-
-        <TextView
-            android:id="@+id/ttomm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="모레"
-
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/today"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingTop="10dp"
-            android:text="" />
+            android:text="내일" />
 
         <TextView
             android:id="@+id/text2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
             android:layout_weight="1"
+            android:background="@drawable/background_selector"
             android:gravity="center"
-            android:paddingTop="10dp" />
+             />
 
-        <TextView
-            android:id="@+id/text4"
+        <ImageView
+            android:id="@+id/img2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/background_selector"
             android:gravity="center"
-            android:paddingTop="10dp" />
-
+             />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/background_selector"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/img1"
+        <TextView
+            android:id="@+id/ttomm"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
             android:layout_weight="1"
+            android:background="@drawable/background_selector"
             android:gravity="center"
-            android:paddingTop="10dp" />
+            android:text="모레" />
 
-        <ImageView
-            android:id="@+id/img2"
+        <TextView
+            android:id="@+id/text4"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
             android:layout_weight="1"
+            android:background="@drawable/background_selector"
             android:gravity="center"
-            android:paddingTop="10px" />
+            />
 
         <ImageView
             android:id="@+id/img3"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/background_selector"
             android:gravity="center"
-            android:paddingTop="10dp" />
+            />
+
     </LinearLayout>
 
 

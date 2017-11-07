@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -84,7 +85,7 @@ public class TabFragment1 extends Fragment {
         super.onCreate(savedInstanceState);
         rootView =  inflater.inflate(R.layout.tab_fragment_1, container, false);
 
-        String url, url2;
+        String url, url2, url3, url4;
         String serviceKey;
         context = getActivity();
 
@@ -93,6 +94,12 @@ public class TabFragment1 extends Fragment {
         TextView title = (TextView)rootView.findViewById(R.id.title);
         TextView kit_per = (TextView)rootView.findViewById(R.id.kitchen_per);
         TextView out_per = (TextView)rootView.findViewById(R.id.outside_per);
+        TextView tem = (TextView)rootView.findViewById(R.id.tem);
+        TextView today_text = (TextView)rootView.findViewById(R.id.today);
+        TextView tom = (TextView)rootView.findViewById(R.id.tom);
+        TextView ttomm = (TextView)rootView.findViewById(R.id.ttomm);
+        TextView text2 = (TextView)rootView.findViewById(R.id.text2);
+        TextView text4 = (TextView)rootView.findViewById(R.id.text4);
 
 
         Typeface typeface1 = Typeface.createFromAsset(context.getAssets(),"BMJUA_ttf.ttf");
@@ -100,11 +107,19 @@ public class TabFragment1 extends Fragment {
 
         tv_main.setTypeface(typeface2);
         kit_Title.setTypeface(typeface2);
+        today_text.setTypeface(typeface2);
+        tem.setTypeface(typeface2);
+        text2.setTypeface(typeface2);
+        text4.setTypeface(typeface2);
+        ttomm.setTypeface(typeface2);
+        tom.setTypeface(typeface2);
+
 
         title.setTypeface(typeface1);
         kit_per.setTypeface(typeface1);
         out_per.setTypeface(typeface1);
 
+        rootView.findViewById(R.id.gps_button).setOnClickListener(mClickListener);
 
         gps_text = (TextView)rootView.findViewById(R.id.gps_text);
 
@@ -174,12 +189,21 @@ public class TabFragment1 extends Fragment {
         url = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleLandWeather?ServiceKey=T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D"
                 + "&regId=" + loc + "&tmFc=201711061800";
         url2 = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib" + "?ServiceKey=" + serviceKey + "&base_date=20171106" + "&base_time=1800" + "&nx=60&ny=127";
+        url3 = "http://newsky2.kma.go.kr/iros/RetrieveLifeIndexService2/getSensorytemLifeList" + "?serviceKey=" + serviceKey + "&areaNo=1100000000"+ "&time=2017110606";
+        url4 = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleTemperature?serviceKey=T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D&regId=11B10101&tmFc=201711070600";
+
+
         GetXMLTask task = new GetXMLTask();
         task.execute(url);
 
         GetXMLTask2 task2 = new GetXMLTask2();
         task2.execute(url2);
 
+        GetXMLTask3 task3 = new GetXMLTask3();
+        task3.execute(url3);
+
+        GetXMLTask4 task4 = new GetXMLTask4();
+        task4.execute(url4);
 
         kitchen_per = (TextView) rootView.findViewById(R.id.kitchen_per);
         outside_per = (TextView) rootView.findViewById(R.id.outside_per);
@@ -201,8 +225,7 @@ public class TabFragment1 extends Fragment {
 
                 String value_inside = dataSnapshot.child("dust_inside").child("dust_val").getValue(String.class);
                 kitchen_per.setText(value_inside + " ㎍/㎥");
-
-
+                
                 //Log.d(TAG, "Value is: " + value);
             }
 
@@ -217,6 +240,48 @@ public class TabFragment1 extends Fragment {
         return rootView;
     }
 
+    Button.OnClickListener mClickListener = new View.OnClickListener(){
+        public void onClick(View v) {
+            gps_text = (TextView)rootView.findViewById(R.id.gps_text);
+
+            mHandler = new Handler(){
+                @Override
+                public void handleMessage(Message msg){
+                    if(msg.what==RENEW_GPS){
+                        makeNewGpsService();
+                    }
+                    if(msg.what==SEND_PRINT){
+                        //logPrint((String)msg.obj);
+                    }
+                }
+            };
+
+            if(gps == null) {
+                gps = new GPSTracker(context.getApplicationContext(),mHandler);
+            }else{
+                gps.Update();
+            }
+
+            // check if GPS enabled
+            if(gps.canGetLocation()){
+                double latitude = gps.getLatitude();
+                double longitude = gps.getLongitude();
+                String address = getAddress(latitude, longitude);
+
+                gps_text.setText(address);
+                // \n is for new line
+                //String[] Gu = address.split(" ");
+
+                //editText.append(Gu[2]);
+                //Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+            }else{
+                // can't get location
+                // GPS or Network is not enabled
+                // Ask user to enable GPS/network in settings
+                gps.showSettingsAlert();
+            }
+        }
+    };
     public String getAddress(double lat, double lng) {
         String nowAddress = "현재 위치를 확인할 수 없습니다.";
         Geocoder geocoder = new Geocoder(context.getApplicationContext(), Locale.KOREA);
@@ -430,6 +495,93 @@ public class TabFragment1 extends Fragment {
                 img1 = (ImageView)rootView.findViewById(R.id.img1);
                 img1.setImageResource(R.mipmap.ic_launcher);
             }
+
+            super.onPostExecute(doc);
+        }
+    }
+
+    private class GetXMLTask3 extends AsyncTask<String, Void, Document> {
+
+        @Override
+        protected Document doInBackground(String... urls) {
+            URL url;
+            try {
+                url = new URL(urls[0]);
+                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+                DocumentBuilder db = dbf.newDocumentBuilder(); //XML문서 빌더 객체를 생성
+                doc = db.parse(new InputSource(url.openStream())); //XML문서를 파싱한다.
+                doc.getDocumentElement().normalize();
+
+            } catch (Exception e) {
+                //Toast.makeText(getBaseContext(), "Parsing Error", Toast.LENGTH_SHORT).show();
+            }
+            return doc;
+        }
+
+        @Override
+        protected void onPostExecute(Document doc) {
+
+            TextView tem = (TextView)rootView.findViewById(R.id.tem);
+
+            String high = "";
+            String low = "";
+
+            NodeList nodeList = doc.getElementsByTagName("IndexModel");
+
+            Node node = nodeList.item(0);
+            Element fstElmnt = (Element) node;
+
+            NodeList nameList2 = fstElmnt.getElementsByTagName("h3");
+            high = ((Node) nameList2.item(0)).getChildNodes().item(0).getNodeValue();
+
+            tem.setText("체감온도 " + high +"︒C");
+
+            //Toast.makeText(context.getApplicationContext(), high + "\n"+low, Toast.LENGTH_LONG).show();
+
+            super.onPostExecute(doc);
+        }
+    }
+
+    private class GetXMLTask4 extends AsyncTask<String, Void, Document> {
+
+        @Override
+        protected Document doInBackground(String... urls) {
+            URL url;
+            try {
+                url = new URL(urls[0]);
+                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+                DocumentBuilder db = dbf.newDocumentBuilder(); //XML문서 빌더 객체를 생성
+                doc = db.parse(new InputSource(url.openStream())); //XML문서를 파싱한다.
+                doc.getDocumentElement().normalize();
+
+            } catch (Exception e) {
+                //Toast.makeText(getBaseContext(), "Parsing Error", Toast.LENGTH_SHORT).show();
+            }
+            return doc;
+        }
+
+        @Override
+        protected void onPostExecute(Document doc) {
+
+            TextView today_tem = (TextView)rootView.findViewById(R.id.today);
+
+            String high = "";
+            String low = "";
+
+            NodeList nodeList = doc.getElementsByTagName("item");
+
+            Node node = nodeList.item(0);
+            Element fstElmnt = (Element) node;
+
+            NodeList nameList2 = fstElmnt.getElementsByTagName("taMax3");
+            high = ((Node) nameList2.item(0)).getChildNodes().item(0).getNodeValue();
+
+            NodeList nameList3 = fstElmnt.getElementsByTagName("taMin3");
+            low = ((Node) nameList3.item(0)).getChildNodes().item(0).getNodeValue();
+
+            today_tem.setText(low + " / " + high +"︒C");
+
+            //Toast.makeText(context.getApplicationContext(), high + "\n"+low, Toast.LENGTH_LONG).show();
 
             super.onPostExecute(doc);
         }
