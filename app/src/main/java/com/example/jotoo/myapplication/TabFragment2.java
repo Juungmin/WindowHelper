@@ -107,11 +107,10 @@ public class TabFragment2 extends Fragment {
                 tv_gas.setText(ssb);
 
                 for(int i=0;i<3;i++){
-                    if(value3.equals("보통")) {
+                    if(!value3.equals("보통")) {
                         new Timer().schedule(new TimerTask() {
                             public void run() {
                                 iv_smoke.setImageResource(R.drawable.smoking);
-
                             }
                         }, 500);
 
@@ -236,7 +235,7 @@ public class TabFragment2 extends Fragment {
             status = Double.toString(sensor_val) + " 입니다. 담배연기가 1m 이내에서 탐지 되었습니다.";
         } else {
             iv_smoke.setImageResource(R.drawable.no_smoking);
-            status = Double.toString(sensor_val) + " 입니다. 평소와 다를바 없습니다.";
+            status = Double.toString(sensor_val) + " 입니다. 평소와 같습니다.";
         }
 
         return status;
