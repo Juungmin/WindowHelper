@@ -100,6 +100,7 @@ public class TabFragment1 extends Fragment {
         TextView ttomm = (TextView)rootView.findViewById(R.id.ttomm);
         TextView text2 = (TextView)rootView.findViewById(R.id.text2);
         TextView text4 = (TextView)rootView.findViewById(R.id.text4);
+        gps_text = (TextView)rootView.findViewById(R.id.gps_text);
 
 
         Typeface typeface1 = Typeface.createFromAsset(context.getAssets(),"BMJUA_ttf.ttf");
@@ -113,6 +114,7 @@ public class TabFragment1 extends Fragment {
         text4.setTypeface(typeface2);
         ttomm.setTypeface(typeface2);
         tom.setTypeface(typeface2);
+        gps_text.setTypeface(typeface2);
 
 
         title.setTypeface(typeface1);
@@ -121,7 +123,6 @@ public class TabFragment1 extends Fragment {
 
         rootView.findViewById(R.id.gps_button).setOnClickListener(mClickListener);
 
-        gps_text = (TextView)rootView.findViewById(R.id.gps_text);
 
         mHandler = new Handler(){
             @Override
