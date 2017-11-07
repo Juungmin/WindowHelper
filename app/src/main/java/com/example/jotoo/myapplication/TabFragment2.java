@@ -92,11 +92,15 @@ public class TabFragment2 extends Fragment {
                 String value_mq2 = dataSnapshot.child(zone_location).child("gas").child("gas_mq2").getValue(String.class);
                 String value_mq7 = dataSnapshot.child(zone_location).child("gas").child("gas_mq7").getValue(String.class);
 
+                String val_first_mq2 = dataSnapshot.child(zone_location).child("gas").child("first_mq2").getValue(String.class);
+                String val_first_mq7 = dataSnapshot.child(zone_location).child("gas").child("first_mq7").getValue(String.class);
+
                 double value_avg = (Double.parseDouble(value_mq2)+ Double.parseDouble(value_mq7))/2.0;
                 String value = Double.toString(value_avg);
-                String value3 = getStatusString(Double.parseDouble(value_mq2), Double.parseDouble(value_mq7));
+                String value3 = getStatusString(Double.parseDouble(val_first_mq2), Double.parseDouble(val_first_mq7), Double.parseDouble(value_mq2), Double.parseDouble(value_mq7));
                 String value2 = value3 + " 입니다.";
 
+                tv_gas.setText(value2);
                 SpannableStringBuilder ssb = new SpannableStringBuilder(value2);
                 if(value3 == "보통"){
                     ssb.setSpan(new ForegroundColorSpan(Color.parseColor("#32CD32")),0,2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -127,26 +131,6 @@ public class TabFragment2 extends Fragment {
 
                 tv_gas.append(" 입니다.");*/
 
-                // 담배사진 변경
-                /*if(value!=null) {
-                    if (Double.parseDouble(value) > 300)
-                        iv_smoke.setImageResource(R.drawable.smoking);
-                    else
-                        iv_smoke.setImageResource(R.drawable.no_smoking);
-                }*/
-
-                //집 가스 출력
-                /*for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                    String value = childSnapshot.child("gas").child("gas_mq2").getValue(String.class);
-                    //String value_mq7 = childSnapshot.child("gas").child("sensor_val_mq7").getValue(String.class);
-
-                    //int value_avg = (Integer.parseInt(value_mq2)+Integer.parseInt(value_mq7))/2;
-                    //String value = value_avg + "";
-                    tv_gas.setText( value + " ppm");
-
-
-                }*/
-
 
                 //피드 출력
                 listView = view.findViewById(R.id.card_listView);
@@ -158,12 +142,16 @@ public class TabFragment2 extends Fragment {
                     String gas_mq2 = zoneSnapshot.child("gas").child("gas_mq2").getValue(String.class);
                     String gas_mq7 = zoneSnapshot.child("gas").child("gas_mq7").getValue(String.class);
 
+                    String first_mq2 = zoneSnapshot.child("gas").child("first_mq2").getValue(String.class);
+                    String first_mq7 = zoneSnapshot.child("gas").child("first_mq7").getValue(String.class);
+
                     String sensor_val_mq2 = zoneSnapshot.child("gas").child("sensor_val_mq2").getValue(String.class);
                     String sensor_val_mq7 = zoneSnapshot.child("gas").child("sensor_val_mq7").getValue(String.class);
 
                     String status = "";
 
-                    status = getStatus(Double.parseDouble(gas_mq2), Double.parseDouble(gas_mq7), Double.parseDouble(sensor_val_mq2), Double.parseDouble(sensor_val_mq7));
+
+                    status = getStatus(Double.parseDouble(first_mq2), Double.parseDouble(first_mq7), Double.parseDouble(gas_mq2), Double.parseDouble(gas_mq7), Double.parseDouble(sensor_val_mq2), Double.parseDouble(sensor_val_mq7));
 
                     if(today_2 != date) {
                         Smoke smoke = new Smoke("[ " + date + " ]\n" + time + " 에 측정된 농도는 " + status);
@@ -188,16 +176,16 @@ public class TabFragment2 extends Fragment {
         return view;
     }
 
-    public String getStatusString(double mq2_ratio, double mq7_ratio) {
+    public String getStatusString(double mq2_init, double mq7_init, double mq2_ratio, double mq7_ratio) {
         String status = "";
 
-        if((temp_mq2 - mq2_ratio) >= 3 || (temp_mq7 - mq7_ratio) >= 6) {
+        if((mq2_init - mq2_ratio) >= 3 || (mq7_init - mq7_ratio) >= 6) {
             status = "매우 높음";
         }
-        else if((temp_mq2 - mq2_ratio) >= 2 || (temp_mq7 - mq7_ratio) >= 4) {
+        else if((mq2_init - mq2_ratio) >= 2 || (mq7_init - mq7_ratio) >= 4) {
             status = "높음";
         }
-        else if(temp_mq2 - mq2_ratio >= 1 || (temp_mq7 - mq7_ratio) >= 2) {
+        else if(mq2_init - mq2_ratio >= 0.7 || (mq7_init - mq7_ratio) >= 1.2) {
             status = "약간 높음";
         } else {
             status = "보통";
@@ -206,7 +194,7 @@ public class TabFragment2 extends Fragment {
         return status;
     }
 
-    public String getStatus(double mq2_ratio, double mq7_ratio, double sensor_val_mq2, double sensor_val_mq7) {
+    public String getStatus(double mq2_init, double mq7_init, double mq2_ratio, double mq7_ratio, double sensor_val_mq2, double sensor_val_mq7) {
         String status = "";
 
         double mq2_fix = 0;
@@ -214,24 +202,16 @@ public class TabFragment2 extends Fragment {
 
         double sensor_val = (sensor_val_mq2 + sensor_val_mq7)/2;
 
-        if(temp_mq2 == 0 && count == 5) {  // to get fifth average value of gas
-            temp_mq2 = mq2_ratio;
-        }
-
-        if(temp_mq7 == 0 && count == 5) {
-            temp_mq7 = mq7_ratio;
-        }
-
         iv_smoke.setImageResource(R.drawable.no_smoking);
-        if((temp_mq2 - mq2_ratio) >= 3 || (temp_mq7 - mq7_ratio) >= 6) {
+        if((mq2_init - mq2_ratio) >= 2.5 || (mq7_init - mq7_ratio) >= 5.2) {
             iv_smoke.setImageResource(R.drawable.smoking);
             status = Double.toString(sensor_val) + " 입니다. 담배연기가 30cm 이내에서 탐지 되었습니다.";
         }
-        else if((temp_mq2 - mq2_ratio) >= 2 || (temp_mq7 - mq7_ratio) >= 4) {
+        else if((mq2_init - mq2_ratio) >= 1.7 || (mq7_init - mq7_ratio) >= 3.3) {
             iv_smoke.setImageResource(R.drawable.smoking);
             status = Double.toString(sensor_val) + " 입니다. 담배연기가 50cm 이내에서 탐지 되었습니다.";
         }
-        else if(temp_mq2 - mq2_ratio >= 1 || (temp_mq7 - mq7_ratio) >= 2) {
+        else if(mq2_init - mq2_ratio >= 0.7 || (mq7_init - mq7_ratio) >= 1.2) {
             iv_smoke.setImageResource(R.drawable.smoking);
             status = Double.toString(sensor_val) + " 입니다. 담배연기가 1m 이내에서 탐지 되었습니다.";
         } else {
