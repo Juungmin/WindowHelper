@@ -22,6 +22,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -75,6 +76,14 @@ public class TabFragment4 extends Fragment {
         TextView dustSubTitle = (TextView) view.findViewById(R.id.dust_SubTitle);
         dustSubTitle.setTypeface(typeface1);
 
+        Switch toggle1 = (Switch)view.findViewById(R.id.toggle1);
+        toggle1.setTypeface(typeface1);
+        Switch toggle2 = (Switch)view.findViewById(R.id.toggle2);
+        toggle2.setTypeface(typeface1);
+        Switch toggle3 = (Switch)view.findViewById(R.id.toggle3);
+        toggle3.setTypeface(typeface1);
+
+
         TextView smokeTitle = (TextView) view.findViewById(R.id.smoke_Title);
         smokeTitle.setTypeface(typeface2);
         TextView smokeSubTitle = (TextView) view.findViewById(R.id.smoke_SubTitle);
@@ -120,36 +129,38 @@ public class TabFragment4 extends Fragment {
         //Read from the DB
         //update if there is a change on DB
         //Morning notification from 5 to 12
+
         myRef_dust.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String dust_outside = dataSnapshot.child("dust_outside").child("dust_out_val").getValue(String.class);
                 String dust_inside = dataSnapshot.child("dust_inside").child("dust_val").getValue(String.class);
+                String reed = dataSnapshot.child("reed").child("val").getValue(String.class);
 
                 double value_outside = Double.parseDouble(dust_outside);
                 double value_inside = Double.parseDouble(dust_inside);
 
                 String status = "";
 
-                if(dust_outside!=null) {
-                    if (value_outside > 150 && switch_check[1] == true) {
+                if(dust_outside!=null && Integer.parseInt(reed) == 1) {
+                    if (value_outside > 150 && switch_check[0] == true ) {
                         status = "'매우 나쁨'";
                         if(Integer.parseInt(currentHour) >= 5 && Integer.parseInt(currentHour) <= 12)
                             Notification_dust(status);
                     }
-                    else if(value_outside > 80 && value_outside <= 150 && switch_check[1] == true) {
+                    else if(value_outside > 80 && value_outside <= 150 && switch_check[0] == true) {
                         status = "'약간 나쁨'";
                         if(Integer.parseInt(currentHour) >= 5 && Integer.parseInt(currentHour) <= 12)
                             Notification_dust(status);
                     }
                 }
                 if(dust_inside!=null) {
-                    if (value_inside > 150 && switch_check[1] == true) {
+                    if (value_inside > 150 && switch_check[0] == true) {
                         status = "'매우 나쁨'";
                         if(Integer.parseInt(currentHour) >= 5 && Integer.parseInt(currentHour) <= 12)
                             Notification_dust(status);
                     }
-                    else if(value_inside > 80 && value_inside <= 150 && switch_check[1] == true) {
+                    else if(value_inside > 80 && value_inside <= 150 && switch_check[0] == true) {
                         status = "'약간 나쁨'";
                         if(Integer.parseInt(currentHour) >= 5 && Integer.parseInt(currentHour) <= 12)
                             Notification_dust(status);
@@ -170,13 +181,14 @@ public class TabFragment4 extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String dust_outside = dataSnapshot.child("dust_outside").child("dust_out_val").getValue(String.class);
                 String dust_inside = dataSnapshot.child("dust_inside").child("dust_val").getValue(String.class);
+                String reed = dataSnapshot.child("reed").child("val").getValue(String.class);
 
                 double value_outside = Double.parseDouble(dust_outside);
                 double value_inside = Double.parseDouble(dust_inside);
 
                 String status = "";
 
-                if(dust_outside!=null) {
+                if(dust_outside!=null && Integer.parseInt(reed) == 1) {
 
                     if (value_outside > 150 && switch_check[1] == true) {
                         status = "'매우 나쁨'";
@@ -216,6 +228,7 @@ public class TabFragment4 extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String value_mq2 = dataSnapshot.child("gas").child("sensor_val_mq2").getValue(String.class);
                 String value_mq7 = dataSnapshot.child("gas").child("sensor_val_mq7").getValue(String.class);
+                String reed = dataSnapshot.child("reed").child("val").getValue(String.class);
 
                 /*if(value_mq2 != null && value_mq7 != null) {
                     if (Double.parseDouble(value) >= 300 && switch_check[0] == true) {
@@ -237,20 +250,23 @@ public class TabFragment4 extends Fragment {
                 }
 
                 if(value_mq2 != null && value_mq7 != null) {
-                    if((temp_mq2 - mq2_ratio) >= 3 || (temp_mq7 - mq7_ratio) >= 6) {
-                        status = "매우 높음";
-                        Notification_gas(status);
-                    }
-                    else if((temp_mq2 - mq2_ratio) >= 2 || (temp_mq7 - mq7_ratio) >= 4) {
-                        status = "높음";
-                        Notification_gas(status);
-                    }
-                    else if(temp_mq2 - mq2_ratio >= 1 || (temp_mq7 - mq7_ratio) >= 2) {
-                        status = "약간 높음";
-                        Notification_gas(status);
-                    } else {
-                        status = "보통";
-                        Notification_gas(status);
+                    if(Integer.parseInt(reed) == 1 && switch_check[2] == true)
+                    {
+                        if((temp_mq2 - mq2_ratio) >= 3 || (temp_mq7 - mq7_ratio) >= 6) {
+                            status = "매우 높음";
+                            Notification_gas(status);
+                        }
+                        else if((temp_mq2 - mq2_ratio) >= 2 || (temp_mq7 - mq7_ratio) >= 4) {
+                            status = "높음";
+                            Notification_gas(status);
+                        }
+                        else if(temp_mq2 - mq2_ratio >= 1 || (temp_mq7 - mq7_ratio) >= 2) {
+                            status = "약간 높음";
+                            Notification_gas(status);
+                        } else {
+                            status = "보통";
+                            Notification_gas(status);
+                        }
                     }
                 }
                 //}
