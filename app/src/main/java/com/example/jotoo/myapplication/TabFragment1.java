@@ -285,49 +285,49 @@ public class TabFragment1 extends Fragment {
 
         return rootView;
     }
-/*
-    Button.OnClickListener mClickListener = new View.OnClickListener(){
-        public void onClick(View v) {
-            gps_text = (TextView)rootView.findViewById(R.id.gps_text);
+    /*
+        Button.OnClickListener mClickListener = new View.OnClickListener(){
+            public void onClick(View v) {
+                gps_text = (TextView)rootView.findViewById(R.id.gps_text);
 
-            mHandler = new Handler(){
-                @Override
-                public void handleMessage(Message msg){
-                    if(msg.what==RENEW_GPS){
-                        makeNewGpsService();
+                mHandler = new Handler(){
+                    @Override
+                    public void handleMessage(Message msg){
+                        if(msg.what==RENEW_GPS){
+                            makeNewGpsService();
+                        }
+                        if(msg.what==SEND_PRINT){
+                            //logPrint((String)msg.obj);
+                        }
                     }
-                    if(msg.what==SEND_PRINT){
-                        //logPrint((String)msg.obj);
-                    }
+                };
+
+                if(gps == null) {
+                    gps = new GPSTracker(context.getApplicationContext(),mHandler);
+                }else{
+                    gps.Update();
                 }
-            };
 
-            if(gps == null) {
-                gps = new GPSTracker(context.getApplicationContext(),mHandler);
-            }else{
-                gps.Update();
+                // check if GPS enabled
+                if(gps.canGetLocation()){
+                    double latitude = gps.getLatitude();
+                    double longitude = gps.getLongitude();
+                    String address = getAddress(latitude, longitude);
+
+                    gps_text.setText(address);
+                    // \n is for new line
+                    //String[] Gu = address.split(" ");
+
+                    //editText.append(Gu[2]);
+                    //Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+                }else{
+                    // can't get location
+                    // GPS or Network is not enabled
+                    // Ask user to enable GPS/network in settings
+                    gps.showSettingsAlert();
+                }
             }
-
-            // check if GPS enabled
-            if(gps.canGetLocation()){
-                double latitude = gps.getLatitude();
-                double longitude = gps.getLongitude();
-                String address = getAddress(latitude, longitude);
-
-                gps_text.setText(address);
-                // \n is for new line
-                //String[] Gu = address.split(" ");
-
-                //editText.append(Gu[2]);
-                //Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
-            }else{
-                // can't get location
-                // GPS or Network is not enabled
-                // Ask user to enable GPS/network in settings
-                gps.showSettingsAlert();
-            }
-        }
-    };*/
+        };*/
     public String getAddress(double lat, double lng) {
         String nowAddress = "현재 위치를 확인할 수 없습니다.";
         Geocoder geocoder = new Geocoder(context.getApplicationContext(), Locale.KOREA);

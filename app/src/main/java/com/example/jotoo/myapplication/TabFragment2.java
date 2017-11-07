@@ -115,7 +115,6 @@ public class TabFragment2 extends Fragment {
                         new Timer().schedule(new TimerTask() {
                             public void run() {
                                 iv_smoke.setImageResource(R.drawable.smoking);
-
                             }
                         }, 500);
 
