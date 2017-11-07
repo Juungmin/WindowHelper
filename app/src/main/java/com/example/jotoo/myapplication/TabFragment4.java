@@ -49,6 +49,9 @@ public class TabFragment4 extends Fragment {
     String today = sdf.format(new Date());
     String currentHour = sdf2.format(new Date());
 
+    double temp_mq2 = 0;
+    double temp_mq7 = 0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.tab_fragment_4, container, false);
@@ -112,26 +115,44 @@ public class TabFragment4 extends Fragment {
 
 
 //        myRef_dust = database.getReference("home test").child("dust");
-        myRef_gas = database.getReference("home test").child("zone_20171107");
-        myRef_dust = database.getReference("home test").child("zone_20171107");
+        myRef_gas = database.getReference("home test").child(zone_location);
+        myRef_dust = database.getReference("home test").child(zone_location);
         //Read from the DB
         //update if there is a change on DB
+        //Morning notification from 5 to 12
         myRef_dust.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String value_outside = dataSnapshot.child("dust_outside").child("dust_out_val").getValue(String.class);
-                String value_inside = dataSnapshot.child("dust_inside").child("dust_val").getValue(String.class);
+                String dust_outside = dataSnapshot.child("dust_outside").child("dust_out_val").getValue(String.class);
+                String dust_inside = dataSnapshot.child("dust_inside").child("dust_val").getValue(String.class);
 
-                if(value_outside!=null) {
-                    if (Double.parseDouble(value_outside) >= 150 && switch_check[1] == true) {
+                double value_outside = Double.parseDouble(dust_outside);
+                double value_inside = Double.parseDouble(dust_inside);
+
+                String status = "";
+
+                if(dust_outside!=null) {
+                    if (value_outside > 150 && switch_check[1] == true) {
+                        status = "'매우 나쁨'";
                         if(Integer.parseInt(currentHour) >= 5 && Integer.parseInt(currentHour) <= 12)
-                            Notification_dust();
+                            Notification_dust(status);
+                    }
+                    else if(value_outside > 80 && value_outside <= 150 && switch_check[1] == true) {
+                        status = "'약간 나쁨'";
+                        if(Integer.parseInt(currentHour) >= 5 && Integer.parseInt(currentHour) <= 12)
+                            Notification_dust(status);
                     }
                 }
-                if(value_inside!=null) {
-                    if (Double.parseDouble(value_inside) >= 150 && switch_check[1] == true) {
+                if(dust_inside!=null) {
+                    if (value_inside > 150 && switch_check[1] == true) {
+                        status = "'매우 나쁨'";
                         if(Integer.parseInt(currentHour) >= 5 && Integer.parseInt(currentHour) <= 12)
-                            Notification_dust();
+                            Notification_dust(status);
+                    }
+                    else if(value_inside > 80 && value_inside <= 150 && switch_check[1] == true) {
+                        status = "'약간 나쁨'";
+                        if(Integer.parseInt(currentHour) >= 5 && Integer.parseInt(currentHour) <= 12)
+                            Notification_dust(status);
                     }
                 }
             }
@@ -142,22 +163,42 @@ public class TabFragment4 extends Fragment {
                 //Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+
+        //Evening notification from 16 to 21
         myRef_dust.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String value_outside = dataSnapshot.child("dust_outside").child("dust_out_val").getValue(String.class);
-                String value_inside = dataSnapshot.child("dust_inside").child("dust_val").getValue(String.class);
+                String dust_outside = dataSnapshot.child("dust_outside").child("dust_out_val").getValue(String.class);
+                String dust_inside = dataSnapshot.child("dust_inside").child("dust_val").getValue(String.class);
 
-                if(value_outside!=null) {
-                    if (Double.parseDouble(value_outside) >= 150 && switch_check[1] == true) {
+                double value_outside = Double.parseDouble(dust_outside);
+                double value_inside = Double.parseDouble(dust_inside);
+
+                String status = "";
+
+                if(dust_outside!=null) {
+
+                    if (value_outside > 150 && switch_check[1] == true) {
+                        status = "'매우 나쁨'";
                         if(Integer.parseInt(currentHour) >= 16 && Integer.parseInt(currentHour) <= 21)
-                            Notification_dust();
+                            Notification_dust(status);
+                    }
+                    else if(value_outside > 80 && value_outside <= 150 && switch_check[1] == true) {
+                        status = "'약간 나쁨'";
+                        if(Integer.parseInt(currentHour) >= 16 && Integer.parseInt(currentHour) <= 21)
+                            Notification_dust(status);
                     }
                 }
-                if(value_inside!=null) {
-                    if (Double.parseDouble(value_inside) >= 150 && switch_check[1] == true) {
+                if(dust_inside!=null) {
+                    if (value_inside > 150 && switch_check[1] == true) {
+                        status = "'매우 나쁨'";
                         if(Integer.parseInt(currentHour) >= 16 && Integer.parseInt(currentHour) <= 21)
-                            Notification_dust();
+                            Notification_dust(status);
+                    }
+                    else if(value_inside > 80 && value_inside <= 150 && switch_check[1] == true) {
+                        status = "'약간 나쁨'";
+                        if(Integer.parseInt(currentHour) >= 16 && Integer.parseInt(currentHour) <= 21)
+                            Notification_dust(status);
                     }
                 }
             }
@@ -168,21 +209,51 @@ public class TabFragment4 extends Fragment {
                 //Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+
+        //Gas notification
         myRef_gas.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String value_mq2 = dataSnapshot.child("gas").child("sensor_val_mq2").getValue(String.class);
                 String value_mq7 = dataSnapshot.child("gas").child("sensor_val_mq7").getValue(String.class);
 
-                double value_avg = (Double.parseDouble(value_mq2)+ Double.parseDouble(value_mq7))/2.0;
-                String value = Double.toString(value_avg);
-
-                if(value!=null) {
+                /*if(value_mq2 != null && value_mq7 != null) {
                     if (Double.parseDouble(value) >= 300 && switch_check[0] == true) {
                         if(Integer.parseInt(currentHour) >= 5 && Integer.parseInt(currentHour) <= 12)
-                            Notification_dust();
+                            Notification_gas(status);
+                    }*/
+
+                double mq2_ratio = Double.parseDouble(value_mq2);
+                double mq7_ratio = Double.parseDouble(value_mq7);
+
+                String status = "";
+
+                if(temp_mq2 == 0) {
+                    temp_mq2 = Double.parseDouble(value_mq2);
+                }
+
+                if(temp_mq7 == 0) {
+                    temp_mq7 = Double.parseDouble(value_mq7);
+                }
+
+                if(value_mq2 != null && value_mq7 != null) {
+                    if((temp_mq2 - mq2_ratio) >= 3 || (temp_mq7 - mq7_ratio) >= 6) {
+                        status = "매우 높음";
+                        Notification_gas(status);
+                    }
+                    else if((temp_mq2 - mq2_ratio) >= 2 || (temp_mq7 - mq7_ratio) >= 4) {
+                        status = "높음";
+                        Notification_gas(status);
+                    }
+                    else if(temp_mq2 - mq2_ratio >= 1 || (temp_mq7 - mq7_ratio) >= 2) {
+                        status = "약간 높음";
+                        Notification_gas(status);
+                    } else {
+                        status = "보통";
+                        Notification_gas(status);
                     }
                 }
+                //}
             }
 
             @Override
@@ -195,7 +266,7 @@ public class TabFragment4 extends Fragment {
         return view;
     }
 
-    public void Notification_dust() {
+    public void Notification_dust(String status) {
         Resources res = getResources();
 
         Intent notificationIntent = new Intent(context.getApplicationContext(), Notifications.class);
@@ -205,7 +276,7 @@ public class TabFragment4 extends Fragment {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context.getApplicationContext());
 
         builder.setContentTitle("WindowHelper")
-                .setContentText("우리 집 미세먼지 농도가 150 이상으로 감지되었습니다.")
+                .setContentText("우리 집 미세먼지 농도가 "+ status +" 감지되었습니다.")
                 .setTicker("상태바 한줄 메시지")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setLargeIcon(BitmapFactory.decodeResource(res, R.mipmap.ic_launcher))
@@ -223,7 +294,7 @@ public class TabFragment4 extends Fragment {
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         nm.notify(1234, builder.build());
     }
-    public void Notification_gas() {
+    public void Notification_gas(String status) {
         Resources res = getResources();
 
         Intent notificationIntent = new Intent(context.getApplicationContext(), Notifications.class);
@@ -233,7 +304,7 @@ public class TabFragment4 extends Fragment {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context.getApplicationContext());
 
         builder.setContentTitle("WindowHelper")
-                .setContentText("우리 집 가스 농도가 150 이상으로 감지되었습니다.")
+                .setContentText("우리 집 가스 농도가 " + status + " 으로 감지되었습니다.")
                 .setTicker("상태바 한줄 메시지")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setLargeIcon(BitmapFactory.decodeResource(res, R.mipmap.ic_launcher))
