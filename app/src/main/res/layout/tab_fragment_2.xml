@@ -42,7 +42,6 @@
 
     <TextView
         android:id="@+id/smoke_value"
-        android:textColor="#F44336"
         android:layout_marginTop="65dp"
         android:layout_marginLeft="50dp"
         android:textSize="30sp"

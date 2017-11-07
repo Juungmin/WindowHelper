@@ -100,6 +100,7 @@ public class TabFragment1 extends Fragment {
         TextView ttomm = (TextView)rootView.findViewById(R.id.ttomm);
         TextView text2 = (TextView)rootView.findViewById(R.id.text2);
         TextView text4 = (TextView)rootView.findViewById(R.id.text4);
+        gps_text = (TextView)rootView.findViewById(R.id.gps_text);
 
 
         Typeface typeface1 = Typeface.createFromAsset(context.getAssets(),"BMJUA_ttf.ttf");
@@ -113,6 +114,7 @@ public class TabFragment1 extends Fragment {
         text4.setTypeface(typeface2);
         ttomm.setTypeface(typeface2);
         tom.setTypeface(typeface2);
+        gps_text.setTypeface(typeface2);
 
 
         title.setTypeface(typeface1);
@@ -121,7 +123,6 @@ public class TabFragment1 extends Fragment {
 
         rootView.findViewById(R.id.gps_button).setOnClickListener(mClickListener);
 
-        gps_text = (TextView)rootView.findViewById(R.id.gps_text);
 
         mHandler = new Handler(){
             @Override
@@ -189,7 +190,9 @@ public class TabFragment1 extends Fragment {
         url = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleLandWeather?ServiceKey=T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D"
                 + "&regId=" + loc + "&tmFc=201711071800";
         url2 = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib" + "?ServiceKey=" + serviceKey + "&base_date=20171107" + "&base_time=1800" + "&nx=60&ny=127";
+
         url3 = "http://newsky2.kma.go.kr/iros/RetrieveLifeIndexService2/getSensorytemLifeList" + "?serviceKey=" + serviceKey + "&areaNo=1100000000"+ "&time=2017110706";
+
         url4 = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleTemperature?serviceKey=T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D&regId=11B10101&tmFc=201711070600";
 
 
@@ -212,7 +215,7 @@ public class TabFragment1 extends Fragment {
         database = FirebaseDatabase.getInstance();
 //        myRef_dust = database.getReference("home test").child("dust");
 
-        myRef_dust = database.getReference("home test").child("zone_20171107");
+        myRef_dust = database.getReference("home test").child(zone_location);
         //Read from the DB
         //update if there is a change on DB
         myRef_dust.addValueEventListener(new ValueEventListener(){
