@@ -100,21 +100,21 @@ public class TabFragment4 extends Fragment {
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Toast.makeText(context.getApplicationContext(), "미세먼지 푸시 현재 상태 : "+b, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context.getApplicationContext(), "아침 미세먼지 푸시 : "+b, Toast.LENGTH_SHORT).show();
                 switch_check[0] = b;
             }
         });
         sw2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Toast.makeText(context.getApplicationContext(), "미세먼지 푸시 현재 상태 : "+b, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context.getApplicationContext(), "저녁 미세먼지 푸시 : "+b, Toast.LENGTH_SHORT).show();
                 switch_check[1] = b;
             }
         });
         sw3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Toast.makeText(context.getApplicationContext(), "담배 푸시 현재 상태 : "+b, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context.getApplicationContext(), "담배연기 푸시 : "+b, Toast.LENGTH_SHORT).show();
                 switch_check[2] = b;
             }
         });
@@ -123,7 +123,6 @@ public class TabFragment4 extends Fragment {
         String zone_location = "zone_"+today;
 
 
-//        myRef_dust = database.getReference("home test").child("dust");
         myRef_gas = database.getReference("home test").child(zone_location);
         myRef_dust = database.getReference("home test").child(zone_location);
         //Read from the DB
@@ -229,12 +228,6 @@ public class TabFragment4 extends Fragment {
                 String value_mq2 = dataSnapshot.child("gas").child("sensor_val_mq2").getValue(String.class);
                 String value_mq7 = dataSnapshot.child("gas").child("sensor_val_mq7").getValue(String.class);
                 String reed = dataSnapshot.child("reed").child("val").getValue(String.class);
-
-                /*if(value_mq2 != null && value_mq7 != null) {
-                    if (Double.parseDouble(value) >= 300 && switch_check[0] == true) {
-                        if(Integer.parseInt(currentHour) >= 5 && Integer.parseInt(currentHour) <= 12)
-                            Notification_gas(status);
-                    }*/
 
                 double mq2_ratio = Double.parseDouble(value_mq2);
                 double mq7_ratio = Double.parseDouble(value_mq7);

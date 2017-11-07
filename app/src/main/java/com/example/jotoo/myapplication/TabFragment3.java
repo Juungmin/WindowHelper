@@ -61,9 +61,7 @@ public class TabFragment3 extends Fragment {
         database = FirebaseDatabase.getInstance();
 
         myWindow = database.getReference("home test");
-        //myWindow = database.getReference("home test").child(zone_location);
 
-        //Log.d("aaaa", zone_location);
         TextView title = (TextView) view.findViewById(R.id.Title);
         Typeface typeface2 = Typeface.createFromAsset(context.getAssets(), "BMDOHYEON_ttf.ttf");
         title.setTypeface(typeface2);
@@ -92,7 +90,6 @@ public class TabFragment3 extends Fragment {
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                //Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
 

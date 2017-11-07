@@ -126,7 +126,6 @@ public class TabFragment1 extends Fragment {
                     public void onClick(View v) {
                         gps_text = (TextView)rootView.findViewById(R.id.gps_text);
 
-                        Log.d("bbbb", "aaaa");
                         mHandler = new Handler(){
                             @Override
                             public void handleMessage(Message msg){
@@ -152,12 +151,8 @@ public class TabFragment1 extends Fragment {
                             String address = getAddress(latitude, longitude);
 
                             gps_text.setText(address);
-                            // \n is for new line
-                            //String[] Gu = address.split(" ");
+                            }else{
 
-                            //editText.append(Gu[2]);
-                            //Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
-                        }else{
                             // can't get location
                             // GPS or Network is not enabled
                             // Ask user to enable GPS/network in settings
@@ -195,9 +190,7 @@ public class TabFragment1 extends Fragment {
             // \n is for new line
             String[] Gu = address.split(" ");
 
-            //editText.append(Gu[2]);
-            //Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
-        }else{
+           }else{
             // can't get location
             // GPS or Network is not enabled
             // Ask user to enable GPS/network in settings
@@ -223,11 +216,7 @@ public class TabFragment1 extends Fragment {
             int Date = Integer.parseInt(currentDate)-1;
             currentDate = String.valueOf(Date);
         }
-        //Log.d(currentHour, "현재 시간");
-        //Log.d(currentDate, "현재 날짜");
 
-        //showdate = (TextView) rootView.findViewById(R.id.date);
-        //showdate.append(currentDate);
         loc = "11B00000";
         serviceKey = "T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D";
         url = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleLandWeather?ServiceKey=T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D"
@@ -256,7 +245,6 @@ public class TabFragment1 extends Fragment {
 
         String zone_location = "zone_"+today;
         database = FirebaseDatabase.getInstance();
-//        myRef_dust = database.getReference("home test").child("dust");
 
         myRef_dust = database.getReference("home test").child(zone_location);
         //Read from the DB
@@ -271,8 +259,6 @@ public class TabFragment1 extends Fragment {
 
                 String value_inside = dataSnapshot.child("dust_inside").child("dust_val").getValue(String.class);
                 kitchen_per.setText(value_inside + " ㎍/㎥");
-
-                //Log.d(TAG, "Value is: " + value);
             }
 
             @Override
@@ -285,49 +271,7 @@ public class TabFragment1 extends Fragment {
 
         return rootView;
     }
-    /*
-        Button.OnClickListener mClickListener = new View.OnClickListener(){
-            public void onClick(View v) {
-                gps_text = (TextView)rootView.findViewById(R.id.gps_text);
 
-                mHandler = new Handler(){
-                    @Override
-                    public void handleMessage(Message msg){
-                        if(msg.what==RENEW_GPS){
-                            makeNewGpsService();
-                        }
-                        if(msg.what==SEND_PRINT){
-                            //logPrint((String)msg.obj);
-                        }
-                    }
-                };
-
-                if(gps == null) {
-                    gps = new GPSTracker(context.getApplicationContext(),mHandler);
-                }else{
-                    gps.Update();
-                }
-
-                // check if GPS enabled
-                if(gps.canGetLocation()){
-                    double latitude = gps.getLatitude();
-                    double longitude = gps.getLongitude();
-                    String address = getAddress(latitude, longitude);
-
-                    gps_text.setText(address);
-                    // \n is for new line
-                    //String[] Gu = address.split(" ");
-
-                    //editText.append(Gu[2]);
-                    //Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
-                }else{
-                    // can't get location
-                    // GPS or Network is not enabled
-                    // Ask user to enable GPS/network in settings
-                    gps.showSettingsAlert();
-                }
-            }
-        };*/
     public String getAddress(double lat, double lng) {
         String nowAddress = "현재 위치를 확인할 수 없습니다.";
         Geocoder geocoder = new Geocoder(context.getApplicationContext(), Locale.KOREA);
@@ -470,7 +414,6 @@ public class TabFragment1 extends Fragment {
                 doc.getDocumentElement().normalize();
 
             } catch (Exception e) {
-                //Toast.makeText(getBaseContext(), "Parsing Error", Toast.LENGTH_SHORT).show();
             }
             return doc;
         }
@@ -479,8 +422,6 @@ public class TabFragment1 extends Fragment {
         protected void onPostExecute(Document doc) {
 
             today = (TextView)rootView.findViewById(R.id.today);
-
-            //today2 = (TextView) findViewById(R.id.today2);
 
             String pm10 = "";
             String pm25 = "";
@@ -509,35 +450,26 @@ public class TabFragment1 extends Fragment {
                 today.setText("흐림");
             }
 
-            /*NodeList nameList13 = fstElmnt.getElementsByTagName("fcstValue");
-            pm25 = ((Node) nameList13.item(0)).getChildNodes().item(0).getNodeValue();*/
 
-
-            //today2.setText(pm25);
 
             if(today.getText() == "구름많음"){
-                //setContentView(R.layout.activity_main);
                 img1 = (ImageView)rootView.findViewById(R.id.img1);
                 img1.setImageResource(R.mipmap.w3);
             }
 
             else if(today.getText().toString() == "구름조금"){
-                //setContentView(R.layout.activity_main);
                 img1 = (ImageView)rootView.findViewById(R.id.img1);
                 img1.setImageResource(R.mipmap.w2);
             }
             else if(today.getText().toString() == "흐림"){
-                //setContentView(R.layout.activity_main);
                 img1 = (ImageView)rootView.findViewById(R.id.img1);
                 img1.setImageResource(R.mipmap.ic_launcher);
             }
             else if(today.getText().toString() == "맑음"){
-                //setContentView(R.layout.activity_main);
                 img1 = (ImageView)rootView.findViewById(R.id.img1);
                 img1.setImageResource(R.mipmap.w1);
             }
             else if(today.getText().toString() == "구름많고 비"){
-                //setContentView(R.layout.activity_main);
                 img1 = (ImageView)rootView.findViewById(R.id.img1);
                 img1.setImageResource(R.mipmap.ic_launcher);
             }
@@ -581,9 +513,6 @@ public class TabFragment1 extends Fragment {
             high = ((Node) nameList2.item(0)).getChildNodes().item(0).getNodeValue();
 
             tem.setText("체감온도 " + high +"︒C");
-
-            //Toast.makeText(context.getApplicationContext(), high + "\n"+low, Toast.LENGTH_LONG).show();
-
             super.onPostExecute(doc);
         }
     }
@@ -626,8 +555,6 @@ public class TabFragment1 extends Fragment {
             low = ((Node) nameList3.item(0)).getChildNodes().item(0).getNodeValue();
 
             today_tem.setText(low + " / " + high +"︒C");
-
-            //Toast.makeText(context.getApplicationContext(), high + "\n"+low, Toast.LENGTH_LONG).show();
 
             super.onPostExecute(doc);
         }

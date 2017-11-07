@@ -86,8 +86,6 @@ public class TabFragment2 extends Fragment {
             public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-//                String value_mq2 = dataSnapshot.child(zone_location).child("gas").child("sensor_val_mq2").getValue(String.class);
-//                String value_mq7 = dataSnapshot.child(zone_location).child("gas").child("sensor_val_mq7").getValue(String.class);
 
                 String value_mq2 = dataSnapshot.child(zone_location).child("gas").child("gas_mq2").getValue(String.class);
                 String value_mq7 = dataSnapshot.child(zone_location).child("gas").child("gas_mq7").getValue(String.class);
@@ -125,10 +123,6 @@ public class TabFragment2 extends Fragment {
                         }, 500);
                     }
                 }
-
-                /*tv_gas.setTextColor(Color.GREEN);
-
-                tv_gas.append(" 입니다.");*/
 
 
                 //피드 출력
@@ -204,18 +198,18 @@ public class TabFragment2 extends Fragment {
         iv_smoke.setImageResource(R.drawable.no_smoking);
         if((mq2_init - mq2_ratio) >= 2.5 || (mq7_init - mq7_ratio) >= 5.2) {
             iv_smoke.setImageResource(R.drawable.smoking);
-            status = Double.toString(sensor_val) + " 입니다. 담배연기가 30cm 이내에서 탐지 되었습니다.";
+            status = Double.toString(sensor_val) + " 입니다.\n => 담배연기가 30cm 이내에서 탐지 되었습니다.";
         }
         else if((mq2_init - mq2_ratio) >= 1.7 || (mq7_init - mq7_ratio) >= 3.3) {
             iv_smoke.setImageResource(R.drawable.smoking);
-            status = Double.toString(sensor_val) + " 입니다. 담배연기가 50cm 이내에서 탐지 되었습니다.";
+            status = Double.toString(sensor_val) + " 입니다.\n => 담배연기가 50cm 이내에서 탐지 되었습니다.";
         }
         else if(mq2_init - mq2_ratio >= 0.7 || (mq7_init - mq7_ratio) >= 1.2) {
             iv_smoke.setImageResource(R.drawable.smoking);
-            status = Double.toString(sensor_val) + " 입니다. 담배연기가 1m 이내에서 탐지 되었습니다.";
+            status = Double.toString(sensor_val) + " 입니다.\n => 담배연기가 1m 이내에서 탐지 되었습니다.";
         } else {
             iv_smoke.setImageResource(R.drawable.no_smoking);
-            status = Double.toString(sensor_val) + " 입니다. 평소와 같습니다.";
+            status = Double.toString(sensor_val) + " 입니다.\n => 담배연기가 탐지 되지 않았습니다";
         }
 
         return status;
