@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("미세먼지"));
         tabLayout.addTab(tabLayout.newTab().setText("가스"));
+        tabLayout.addTab(tabLayout.newTab().setText("창문"));
         tabLayout.addTab(tabLayout.newTab().setText("설정"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
@@ -52,9 +53,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-   /* public void btnStart(View v) {
-        Intent intent = new Intent(this, SubActivity.class);
-        intent.putExtra("input1",edt1.getText().toString());
-        startActivity(intent);
-    }*/
 }

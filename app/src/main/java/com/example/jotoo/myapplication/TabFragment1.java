@@ -90,11 +90,21 @@ public class TabFragment1 extends Fragment {
 
         TextView tv_main = (TextView)rootView.findViewById(R.id.main);
         TextView kit_Title = (TextView)rootView.findViewById(R.id.kitchen_Title);
+        TextView title = (TextView)rootView.findViewById(R.id.title);
+        TextView kit_per = (TextView)rootView.findViewById(R.id.kitchen_per);
+        TextView out_per = (TextView)rootView.findViewById(R.id.outside_per);
 
 
         Typeface typeface1 = Typeface.createFromAsset(context.getAssets(),"BMJUA_ttf.ttf");
-        tv_main.setTypeface(typeface1);
-        kit_Title.setTypeface(typeface1);
+        Typeface typeface2 = Typeface.createFromAsset(context.getAssets(),"BMDOHYEON_ttf.ttf");
+
+        tv_main.setTypeface(typeface2);
+        kit_Title.setTypeface(typeface2);
+
+        title.setTypeface(typeface1);
+        kit_per.setTypeface(typeface1);
+        out_per.setTypeface(typeface1);
+
 
         gps_text = (TextView)rootView.findViewById(R.id.gps_text);
 

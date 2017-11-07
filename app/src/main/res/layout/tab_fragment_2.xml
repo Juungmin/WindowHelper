@@ -44,7 +44,7 @@
         android:id="@+id/smoke_value"
         android:textColor="#F44336"
         android:layout_marginTop="65dp"
-        android:layout_marginLeft="70dp"
+        android:layout_marginLeft="50dp"
         android:textSize="30sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
