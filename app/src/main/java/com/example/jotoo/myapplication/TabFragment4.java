@@ -283,10 +283,8 @@ public class TabFragment4 extends Fragment {
     }
 
     public void Notification_dust(String status) {
-        Resources res = getResources();
 
-        Intent notificationIntent = new Intent(context.getApplicationContext(), Notifications.class);
-        notificationIntent.putExtra("notificationId", 9999); //전달할 값
+        Intent notificationIntent = new Intent(context.getApplicationContext(), TabFragment1.class);
         PendingIntent contentIntent = PendingIntent.getActivity(context.getApplicationContext(), 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context.getApplicationContext());
@@ -295,7 +293,6 @@ public class TabFragment4 extends Fragment {
                 .setContentText("우리 집 미세먼지 농도가 "+ status +" 감지되었습니다.")
                 .setTicker("상태바 한줄 메시지")
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setLargeIcon(BitmapFactory.decodeResource(res, R.mipmap.ic_launcher))
                 .setContentIntent(contentIntent)
                 .setAutoCancel(true)
                 .setWhen(System.currentTimeMillis())
@@ -307,14 +304,9 @@ public class TabFragment4 extends Fragment {
                     .setVisibility(Notification.VISIBILITY_PUBLIC);
         }
 
-        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.notify(1234, builder.build());
     }
     public void Notification_gas(String status) {
-        Resources res = getResources();
-
-        Intent notificationIntent = new Intent(context.getApplicationContext(), Notifications.class);
-        notificationIntent.putExtra("notificationId", 9999); //전달할 값
+        Intent notificationIntent = new Intent(context.getApplicationContext(), TabFragment1.class);
         PendingIntent contentIntent = PendingIntent.getActivity(context.getApplicationContext(), 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context.getApplicationContext());
@@ -323,7 +315,6 @@ public class TabFragment4 extends Fragment {
                 .setContentText("우리 집 가스 농도가 " + status + " 으로 감지되었습니다.")
                 .setTicker("상태바 한줄 메시지")
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setLargeIcon(BitmapFactory.decodeResource(res, R.mipmap.ic_launcher))
                 .setContentIntent(contentIntent)
                 .setAutoCancel(true)
                 .setWhen(System.currentTimeMillis())
@@ -337,7 +328,5 @@ public class TabFragment4 extends Fragment {
                     .setVisibility(Notification.VISIBILITY_PUBLIC);
         }
 
-        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.notify(1234, builder.build());
     }
 }

@@ -15,10 +15,12 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,13 +51,19 @@ public class TabFragment3 extends Fragment {
 
     String zone_location = "zone_"+today;
 
+    ImageView window;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.tab_fragment_3, container, false);
         context = getActivity();
 
-        myWindow = database.getReference("home test").child("zone_20171108");
+        database = FirebaseDatabase.getInstance();
 
+        myWindow = database.getReference("home test");
+        //myWindow = database.getReference("home test").child(zone_location);
+
+        //Log.d("aaaa", zone_location);
         TextView title = (TextView) view.findViewById(R.id.Title);
         Typeface typeface2 = Typeface.createFromAsset(context.getAssets(), "BMDOHYEON_ttf.ttf");
         title.setTypeface(typeface2);
@@ -64,21 +72,23 @@ public class TabFragment3 extends Fragment {
         Typeface typeface1 = Typeface.createFromAsset(context.getAssets(), "BMJUA_ttf.ttf");
         subtitle.setTypeface(typeface1);
 
+        window = (ImageView)view.findViewById(R.id.window);
+
         myWindow.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String reed = dataSnapshot.child("reed").child("val").getValue(String.class);
+                String reed = dataSnapshot.child(zone_location).child("reed").child("val").getValue(String.class);
 
                 if(Integer.parseInt(reed) == 1){
-
+                    subtitle.setText("창문이 열려있습니다.");
+                    window.setImageResource(R.drawable.window);
                 }
                 else{
                     subtitle.setText("창문이 닫혀있습니다.");
-
+                    window.setImageResource(R.drawable.window_close);
                 }
 
             }
-
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
