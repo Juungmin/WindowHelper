@@ -30,6 +30,8 @@ import org.w3c.dom.Text;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class TabFragment2 extends Fragment {
 
@@ -103,6 +105,23 @@ public class TabFragment2 extends Fragment {
                     ssb.setSpan(new ForegroundColorSpan(Color.parseColor("#DC143C")),0,2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
                 tv_gas.setText(ssb);
+
+                for(int i=0;i<3;i++){
+                    if(value3.equals("보통")) {
+                        new Timer().schedule(new TimerTask() {
+                            public void run() {
+                                iv_smoke.setImageResource(R.drawable.smoking);
+
+                            }
+                        }, 500);
+
+                        new Timer().schedule(new TimerTask() {
+                            public void run() {
+                                iv_smoke.setImageResource(R.drawable.no_smoking);
+                            }
+                        }, 500);
+                    }
+                }
 
                 /*tv_gas.setTextColor(Color.GREEN);
 
