@@ -152,6 +152,7 @@ public class TabFragment2 extends Fragment {
                     }
                     else {
                         Smoke smoke = new Smoke("[ " + date + " ]\n" + time + " 에 측정된 농도는 " + status);
+                        smokeArrayAdapter.add(smoke);
                     }
                     count++;
                 }

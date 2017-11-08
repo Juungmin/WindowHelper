@@ -343,56 +343,45 @@ public class TabFragment1 extends Fragment {
 
             text4.setText(wf4Pm);
 
-            //Toast.makeText(getApplicationContext(), wf3Pm + "\n"+wf4Pm, Toast.LENGTH_LONG).show();
             if(wf3Pm.equals("구름많음")){
-                //setContentView(R.layout.activity_main);
                 img2 = (ImageView)rootView.findViewById(R.id.img2);
                 img2.setImageResource(R.mipmap.w3);
             }
 
             else if(wf3Pm.equals("구름조금")){
-                //setContentView(R.layout.activity_main);
                 img2 = (ImageView)rootView.findViewById(R.id.img2);
                 img2.setImageResource(R.mipmap.w2);
             }
             else if(wf3Pm.equals("흐림")){
-                //setContentView(R.layout.activity_main);
                 img2 = (ImageView)rootView.findViewById(R.id.img2);
                 img2.setImageResource(R.mipmap.ic_launcher);
             }
             else if(wf3Pm.equals("맑음")){
-                //setContentView(R.layout.activity_main);
                 img2 = (ImageView)rootView.findViewById(R.id.img2);
                 img2.setImageResource(R.mipmap.w1);
             }
             else if(wf3Pm.equals("구름많고 비")){
-                //setContentView(R.layout.activity_main);
                 img2 = (ImageView)rootView.findViewById(R.id.img2);
                 img2.setImageResource(R.mipmap.ic_launcher);
             }
             if(wf4Pm.equals("구름많음")){
-                //setContentView(R.layout.activity_main);
                 img3 = (ImageView)rootView.findViewById(R.id.img3);
                 img3.setImageResource(R.mipmap.w3);
             }
 
             else if(wf4Pm.equals("구름조금")){
-                //setContentView(R.layout.activity_main);
                 img3 = (ImageView)rootView.findViewById(R.id.img3);
                 img3.setImageResource(R.mipmap.w2);
             }
             else if(wf4Pm.equals("흐림")){
-                //setContentView(R.layout.activity_main);
                 img3 = (ImageView)rootView.findViewById(R.id.img3);
                 img3.setImageResource(R.mipmap.ic_launcher);
             }
             else if(wf4Pm.equals("맑음")){
-                //setContentView(R.layout.activity_main);
                 img3 = (ImageView)rootView.findViewById(R.id.img3);
                 img3.setImageResource(R.mipmap.w1);
             }
             else if(wf4Pm.equals("구름많고 비")){
-                //setContentView(R.layout.activity_main);
                 img3 = (ImageView)rootView.findViewById(R.id.img3);
                 img3.setImageResource(R.mipmap.ic_launcher);
             }
@@ -548,6 +537,7 @@ public class TabFragment1 extends Fragment {
             Node node = nodeList.item(0);
             Element fstElmnt = (Element) node;
 
+            /*
             NodeList nameList2 = fstElmnt.getElementsByTagName("taMax3");
             high = ((Node) nameList2.item(0)).getChildNodes().item(0).getNodeValue();
 
@@ -556,7 +546,8 @@ public class TabFragment1 extends Fragment {
 
             today_tem.setText(low + " / " + high +"︒C");
 
-            super.onPostExecute(doc);
+            super.onPostExecute(doc);*/
+
         }
     }
 }
