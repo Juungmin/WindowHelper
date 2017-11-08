@@ -156,7 +156,6 @@ public class TabFragment2 extends Fragment {
                     }
                     count++;
                 }
-
                 listView.setAdapter(smokeArrayAdapter);
             }
 

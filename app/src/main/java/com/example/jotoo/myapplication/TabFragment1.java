@@ -220,12 +220,12 @@ public class TabFragment1 extends Fragment {
         loc = "11B00000";
         serviceKey = "T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D";
         url = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleLandWeather?ServiceKey=T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D"
-                + "&regId=" + loc + "&tmFc=201711071800";
-        url2 = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib" + "?ServiceKey=" + serviceKey + "&base_date=20171107" + "&base_time=1800" + "&nx=60&ny=127";
+                + "&regId=" + loc + "&tmFc=201711080600";
+        url2 = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib" + "?ServiceKey=" + serviceKey + "&base_date=20171108" + "&base_time=0600" + "&nx=60&ny=127";
 
-        url3 = "http://newsky2.kma.go.kr/iros/RetrieveLifeIndexService2/getSensorytemLifeList" + "?serviceKey=" + serviceKey + "&areaNo=1100000000"+ "&time=2017110706";
+        url3 = "http://newsky2.kma.go.kr/iros/RetrieveLifeIndexService2/getSensorytemLifeList" + "?serviceKey=" + serviceKey + "&areaNo=1100000000"+ "&time=2017110806";
 
-        url4 = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleTemperature?serviceKey=T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D&regId=11B10101&tmFc=201711070600";
+        url4 = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleTemperature?serviceKey=T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D&regId=11B10101&tmFc=201711080600";
 
 
         GetXMLTask task = new GetXMLTask();
