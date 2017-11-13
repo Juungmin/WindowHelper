@@ -38,7 +38,7 @@ public class TabFragment3 extends Fragment {
 
     String today = sdf.format(new Date());
 
-    String zone_location = "zone_"+today;
+    String zone_location = "zone_20171112";
 
     ImageView window;
 

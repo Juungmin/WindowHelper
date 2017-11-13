@@ -58,7 +58,7 @@ public class TabFragment2 extends Fragment {
 
     String today_2 = sdf2.format(new Date());
 
-    String zone_location = "zone_"+today;
+    String zone_location = "zone_20171112";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.tab_fragment_2, container, false);

@@ -220,12 +220,12 @@ public class TabFragment1 extends Fragment {
         loc = "11B00000";
         serviceKey = "T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D";
         url = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleLandWeather?ServiceKey=T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D"
-                + "&regId=" + loc + "&tmFc=201711080600";
-        url2 = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib" + "?ServiceKey=" + serviceKey + "&base_date=20171108" + "&base_time=0600" + "&nx=60&ny=127";
+                + "&regId=" + loc + "&tmFc=201711130600";
+        url2 = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib" + "?ServiceKey=" + serviceKey + "&base_date=20171113" + "&base_time=0600" + "&nx=60&ny=127";
 
-        url3 = "http://newsky2.kma.go.kr/iros/RetrieveLifeIndexService2/getSensorytemLifeList" + "?serviceKey=" + serviceKey + "&areaNo=1100000000"+ "&time=2017110806";
+        url3 = "http://newsky2.kma.go.kr/iros/RetrieveLifeIndexService2/getSensorytemLifeList" + "?serviceKey=" + serviceKey + "&areaNo=1100000000"+ "&time=2017111306";
 
-        url4 = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleTemperature?serviceKey=T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D&regId=11B10101&tmFc=201711080600";
+        url4 = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleTemperature?serviceKey=T5fzCFA3Z5pBRBdAaL0%2Bge7wIl%2Bcuh4Xfa%2FpCg9G6%2BolcfOjtId7agCorNFCa6HGZg7yqvI6IDDJmq6baiT7gg%3D%3D&regId=11B10101&tmFc=201711130600";
 
 
         GetXMLTask task = new GetXMLTask();
@@ -243,7 +243,7 @@ public class TabFragment1 extends Fragment {
         kitchen_per = (TextView) rootView.findViewById(R.id.kitchen_per);
         outside_per = (TextView) rootView.findViewById(R.id.outside_per);
 
-        String zone_location = "zone_"+today;
+        String zone_location = "zone_20171112";
         database = FirebaseDatabase.getInstance();
 
         myRef_dust = database.getReference("home test").child(zone_location);
@@ -360,7 +360,7 @@ public class TabFragment1 extends Fragment {
                 img2 = (ImageView)rootView.findViewById(R.id.img2);
                 img2.setImageResource(R.mipmap.w1);
             }
-            else if(wf3Pm.equals("구름많고 비")){
+            else if(wf3Pm.equals("구름많고 비") ||  wf3Pm.equals("흐리고 비")){
                 img2 = (ImageView)rootView.findViewById(R.id.img2);
                 img2.setImageResource(R.mipmap.ic_launcher);
             }
@@ -381,7 +381,7 @@ public class TabFragment1 extends Fragment {
                 img3 = (ImageView)rootView.findViewById(R.id.img3);
                 img3.setImageResource(R.mipmap.w1);
             }
-            else if(wf4Pm.equals("구름많고 비")){
+            else if(wf4Pm.equals("구름많고 비") ||  wf4Pm.equals("흐리고 비")){
                 img3 = (ImageView)rootView.findViewById(R.id.img3);
                 img3.setImageResource(R.mipmap.ic_launcher);
             }

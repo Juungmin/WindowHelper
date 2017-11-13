@@ -116,7 +116,7 @@ public class TabFragment4 extends Fragment {
         });
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
         String today = sdf.format(new Date());
-        String zone_location = "zone_"+today;
+        String zone_location = "zone_20171112";
 
 
         myRef_gas = database.getReference("home test").child(zone_location);
